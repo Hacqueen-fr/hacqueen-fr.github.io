@@ -14,59 +14,94 @@
       background: linear-gradient(160deg, #0a0a0a, #1e1f3a);
       color: #efefef;
     }
-
-    .container {
-      max-width: 800px;
-      margin: auto;
-    }
-
     h1 {
       text-align: center;
       color: #A0E8FF;
     }
-
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+    .search-bar {
+      margin: 20px 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .search-bar input, .search-bar select {
+      padding: 10px;
+      border: 1px solid #00FFFF;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 5px;
+      color: #00FFFF;
+    }
+    .article-card {
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 3px solid #00FFFF;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .article-card h2 {
+      color: #FF2ECC;
+    }
+    .tags {
+      margin: 10px 0;
+    }
+    .tag {
+      display: inline-block;
+      margin: 3px;
+      padding: 4px 10px;
+      background: rgba(255, 46, 204, 0.2);
+      border: 1px solid #FF2ECC;
+      border-radius: 5px;
+      font-size: 0.8em;
+      color: #FF2ECC;
+    }
     .button {
       display: inline-block;
-      margin-bottom: 20px;
-      padding: 10px 20px;
-      background: rgba(0,255,255,0.1);
-      color: #00FFFF;
+      margin-top: 10px;
+      padding: 10px 15px;
       border: 1px solid #00FFFF;
+      background: rgba(0, 255, 255, 0.1);
+      color: #00FFFF;
       border-radius: 5px;
-      text-decoration: none;
+      cursor: pointer;
     }
-
+    .button:hover {
+      background: rgba(255, 46, 204, 0.2);
+      color: #FF2ECC;
+    }
     #reader {
-      padding: 20px;
-      background: rgba(255,255,255,0.02);
+      background: rgba(255, 255, 255, 0.02);
       border: 1px solid #00ffff30;
+      padding: 20px;
       border-radius: 8px;
+      margin-top: 30px;
     }
-
     .mascot {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      width: 90px;
+      width: 100px;
       border-radius: 50%;
       filter: drop-shadow(0 0 10px #00ffff);
-      transition: transform 0.3s ease;
       z-index: 10;
+      transition: transform 0.3s ease;
     }
-
     .bubble {
       position: fixed;
       bottom: 130px;
-      right: 120px;
+      right: 130px;
       background: rgba(0, 0, 0, 0.7);
-      color: #A0E8FF;
-      border: 1px solid #00FFFF;
-      border-radius: 10px;
       padding: 10px 15px;
+      border-radius: 10px;
+      border: 1px solid #00FFFF;
+      color: #A0E8FF;
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.3s ease;
+      font-size: 0.9em;
     }
-
     .bubble.show {
       opacity: 1;
     }
@@ -75,45 +110,136 @@
 <body>
   <div class="container">
     <a href="index.html" class="button">← Back to Home</a>
-    <h1>Article</h1>
-    <div id="reader">Loading...</div>
+    <h1>Articles & Write-Ups</h1>
+
+    <div class="search-bar">
+      <input type="text" id="search" placeholder="Search..." />
+      <select id="tagFilter"><option value="">All Tags</option></select>
+    </div>
+
+    <div id="articles"></div>
+    <div id="reader"></div>
   </div>
 
   <img src="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cyber_cat.png" class="mascot" id="mascot" />
   <div class="bubble" id="bubble">Meow</div>
 
   <script>
-    async function loadArticle() {
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get('id') || 'first.md'; // fallback
+    const posts = ['first.md', 'second.md', 'third.md'];
+    const baseURL = 'https://hacqueen-fr.github.io/posts/';
+    const allArticles = [];
 
-      try {
-        const res = await fetch('https://hacqueen-fr.github.io/posts/' + id);
+    async function loadArticles() {
+      const tagSet = new Set();
+      for (const file of posts) {
+        const res = await fetch(baseURL + file);
         const text = await res.text();
         let content = text;
-
         if (text.startsWith('---')) {
           const parts = text.split('---');
           content = parts.slice(2).join('---').trim();
         }
+        const title = text.match(/title:\s*(.*)/)?.[1]?.trim() || file;
+        const date = text.match(/date:\s*(.*)/)?.[1]?.trim() || '';
+        const description = text.match(/description:\s*(.*)/)?.[1]?.trim() || 'No description.';
+        const tagsRaw = text.match(/tags:\s*\[(.*?)\]/)?.[1] || '';
+        const tags = tagsRaw.split(',').map(t => t.trim().replace(/['"]/g, '')).filter(Boolean);
+        tags.forEach(tag => tagSet.add(tag));
+        allArticles.push({ file, title, date, description, tags, content });
+      }
+      updateTagFilter([...tagSet]);
+      displayArticles(allArticles);
+    }
 
-        document.getElementById('reader').innerHTML = marked.parse(content);
+    function updateTagFilter(tags) {
+      const select = document.getElementById('tagFilter');
+      tags.sort().forEach(tag => {
+        const option = document.createElement('option');
+        option.value = tag;
+        option.textContent = tag;
+        select.appendChild(option);
+      });
+    }
 
-        // mascotte animation
-        document.getElementById('mascot').style.transform = 'scale(1.1)';
-        const bubble = document.getElementById('bubble');
-        bubble.classList.add('show');
-        setTimeout(() => {
-          bubble.classList.remove('show');
-          document.getElementById('mascot').style.transform = 'scale(1)';
-        }, 2000);
-      } catch (e) {
-        document.getElementById('reader').innerHTML = "<p>⚠️ Article not found.</p>";
-        console.error(e);
+    function displayArticles(articles) {
+      const container = document.getElementById('articles');
+      container.innerHTML = '';
+      articles.forEach(article => {
+        const card = document.createElement('div');
+        card.className = 'article-card';
+        card.innerHTML = `
+          <h2>${article.title}</h2>
+          <p><em>${article.date}</em></p>
+          <p>${article.description}</p>
+          <div class="tags">${article.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>
+          <button class="button" onclick="displayArticle('${article.file}', '${article.title}')">📖 Read</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    async function displayArticle(file, titleFromButton = null) {
+      const res = await fetch(baseURL + file);
+      const raw = await res.text();
+      let content = raw;
+      if (raw.startsWith('---')) {
+        const parts = raw.split('---');
+        content = parts.slice(2).join('---').trim();
+      }
+      document.getElementById('reader').innerHTML = marked.parse(content);
+
+      // mascotte + bulle
+      const mascot = document.getElementById('mascot');
+      const bubble = document.getElementById('bubble');
+      mascot.style.transform = 'scale(1.1)';
+      bubble.classList.add('show');
+      setTimeout(() => {
+        mascot.style.transform = 'scale(1)';
+        bubble.classList.remove('show');
+      }, 1800);
+
+      // changer le titre
+      if (titleFromButton) document.title = `📖 ${titleFromButton} — Hacqueen`;
+      document.getElementById('reader').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Recherche
+    document.getElementById('search').addEventListener('input', e => {
+      const value = e.target.value.toLowerCase();
+      const filtered = allArticles.filter(a =>
+        a.title.toLowerCase().includes(value) ||
+        a.description.toLowerCase().includes(value) ||
+        a.tags.some(tag => tag.toLowerCase().includes(value))
+      );
+      displayArticles(filtered);
+    });
+
+    // Tag select
+    document.getElementById('tagFilter').addEventListener('change', e => {
+      const tag = e.target.value;
+      const filtered = tag ? allArticles.filter(a => a.tags.includes(tag)) : allArticles;
+      displayArticles(filtered);
+    });
+
+    // Chargement avec URL id ou tag
+    async function start() {
+      await loadArticles();
+      const urlParams = new URLSearchParams(window.location.search);
+      const fileId = urlParams.get('id');
+      const tagFilter = urlParams.get('tag');
+      if (fileId) {
+        document.getElementById('articles').style.display = 'none';
+        document.querySelector('.search-bar')?.remove();
+        const article = allArticles.find(a => a.file === fileId);
+        displayArticle(fileId, article?.title || fileId);
+      } else if (tagFilter) {
+        const filtered = allArticles.filter(a => a.tags.includes(tagFilter));
+        document.getElementById('tagFilter').value = tagFilter;
+        displayArticles(filtered);
       }
     }
 
-    loadArticle();
+    start();
   </script>
 </body>
 </html>
