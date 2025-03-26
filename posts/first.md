@@ -1,16 +1,10 @@
 ---
-title: example
+title: My First CTF Experience
 date: 2025-03-26
-description: example
+description: A short write-up about my first steps into the CTF world!
 ---
 
-## Hello world 🌍
-Ceci est un teste
+## Let's hack ✨
 
-### Étapes :
-1. Découverte du challenge
-2. Enum
-3. Exploitation
-4. Flag récupéré 🎉
-
-> À très vite pour d’autres aventures 🦄
+It was a simple challenge, but I learned tons.  
+Burp Suite, base64 decoding, and HTML spelunking... all in one evening.
