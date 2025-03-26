@@ -19,14 +19,15 @@
       color: #A0E8FF;
     }
     .container {
-      max-width: 900px;
+      max-width: 100%;
       margin: auto;
     }
     .search-bar {
-      margin: 20px 0;
+      margin: 20px auto;
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
+      justify-content: center;
     }
     .search-bar input, .search-bar select {
       padding: 10px;
@@ -35,12 +36,21 @@
       border-radius: 5px;
       color: #00FFFF;
     }
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 20px;
+      padding-bottom: 20px;
+    }
     .article-card {
+      flex: 0 0 300px;
       background: rgba(255, 255, 255, 0.03);
       border-left: 3px solid #00FFFF;
       padding: 20px;
       border-radius: 8px;
-      margin-bottom: 20px;
+      scroll-snap-align: start;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
     }
     .article-card h2 {
       color: #FF2ECC;
@@ -60,14 +70,14 @@
     }
     .button {
       display: inline-block;
-      margin: 8px 10px 0 0;
+      margin: 6px 6px 0 0;
       padding: 8px 14px;
       border: 1px solid #00FFFF;
       background-color: rgba(0, 255, 255, 0.1);
       color: #00FFFF;
       border-radius: 5px;
       cursor: pointer;
-      font-size: 0.9em;
+      font-size: 0.8em;
     }
     .button:hover {
       background: rgba(255, 46, 204, 0.2);
@@ -79,6 +89,8 @@
       padding: 20px;
       border-radius: 8px;
       margin-top: 30px;
+      max-width: 900px;
+      margin-inline: auto;
     }
     .mascot {
       position: fixed;
@@ -142,7 +154,7 @@
       <select id="tagFilter"><option value="">All Tags</option></select>
     </div>
 
-    <div id="articles"></div>
+    <div class="carousel" id="articles"></div>
     <div id="reader"></div>
   </div>
 
@@ -200,6 +212,8 @@
           <div class="tags">${article.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>
           <button class="button" onclick="displayArticle('${article.file}', '${article.title}')">📖 Read</button>
           <button class="button" onclick="copyLink('${article.file}')">🔗 Copy Link</button>
+          <button class="button" onclick="shareToX('${article.file}')">🐦 Share</button>
+          <button class="button" onclick="shareToMastodon('${article.file}')">🐘 Mastodon</button>
         `;
         container.appendChild(card);
       });
@@ -211,12 +225,23 @@
         const bubble = document.getElementById('bubble');
         bubble.textContent = "🔗 Copied!";
         bubble.classList.add('show');
-        setTimeout(() => {
-          bubble.classList.remove('show');
-        }, 2000);
-      }).catch(() => {
-        alert("Couldn't copy link 😿");
+        setTimeout(() => bubble.classList.remove('show'), 2000);
       });
+    }
+
+    function shareToX(file) {
+      const url = `${window.location.origin}${window.location.pathname}?id=${file}`;
+      const text = encodeURIComponent("Check out this hacking article 🐾💻 → ");
+      window.open(`https://twitter.com/intent/tweet?text=${text}${url}`, '_blank');
+    }
+
+    function shareToMastodon(file) {
+      const url = `${window.location.origin}${window.location.pathname}?id=${file}`;
+      const text = "New hacking article: " + url;
+      const instance = prompt("Enter your Mastodon instance (e.g. mastodon.social):");
+      if (instance) {
+        window.open(`https://${instance}/share?text=${encodeURIComponent(text)}`, '_blank');
+      }
     }
 
     async function displayArticle(file, titleFromButton = null) {
