@@ -56,13 +56,17 @@
       margin-bottom: 40px;
     }
 
-    .photo {
-      border-radius: 12px;
-      width: 160px;
+    .mascot {
+      width: 120px;
       height: auto;
-      object-fit: cover;
-      border: 3px solid #FF2ECC;
-      box-shadow: 0 0 30px #FF2ECCAA;
+      border-radius: 12px;
+      filter: drop-shadow(0 0 10px #00ffff) drop-shadow(0 0 5px #ff2ecc);
+      transition: transform 0.4s ease, filter 0.4s ease;
+    }
+
+    .mascot:hover {
+      transform: scale(1.1) rotate(-2deg);
+      filter: drop-shadow(0 0 20px #ff2ecc) drop-shadow(0 0 10px #00ffff);
     }
 
     .intro {
@@ -151,11 +155,13 @@
         <h1 class="glitch" data-text="Sidney Falhun ✨">Sidney Falhun ✨</h1>
         <p style="font-style: italic; color: #cccccc;">Hacqueen World 🦄</p>
       </div>
-      <img src="https://avatars.githubusercontent.com/u/114197273?v=4" alt="Photo of Sidney Falhun" class="photo" />
+      <img src="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cyber_cat.png" 
+           alt="Cyber Cat Mascot" 
+           class="mascot" />
     </div>
 
     <div class="intro">
-      <h2>Welcome to my kingdom</h2>
+      <h2>Welcome to my queendom</h2>
       <p>I’m an infosec enthusiast for several years now. On this site, you'll find lots of articles about hacking: CTF write-ups, bug bounty adventures, fun research, and other cyber tinkerings!</p>
     </div>
 
@@ -166,7 +172,7 @@
     <hr class="line" />
 
     <div>
-      <a href="cv.html" class="button">📄 My CV</a>
+      <a href="cv.html" class="button">📄 Resume</a>
       <a href="articles.html" class="button">📚 Articles & Write-ups</a>
       <a href="https://www.root-me.org/Hacqueen" class="button" target="_blank">🕵️‍♀️ Root-Me</a>
       <a href="https://www.linkedin.com/in/sidney-falhun-04a363297/" class="button" target="_blank">🔗 LinkedIn</a>
