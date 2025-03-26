@@ -60,13 +60,14 @@
     }
     .button {
       display: inline-block;
-      margin-top: 10px;
-      padding: 10px 15px;
+      margin: 8px 10px 0 0;
+      padding: 8px 14px;
       border: 1px solid #00FFFF;
-      background: rgba(0, 255, 255, 0.1);
+      background-color: rgba(0, 255, 255, 0.1);
       color: #00FFFF;
       border-radius: 5px;
       cursor: pointer;
+      font-size: 0.9em;
     }
     .button:hover {
       background: rgba(255, 46, 204, 0.2);
@@ -198,8 +199,23 @@
           <p>${article.description}</p>
           <div class="tags">${article.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>
           <button class="button" onclick="displayArticle('${article.file}', '${article.title}')">📖 Read</button>
+          <button class="button" onclick="copyLink('${article.file}')">🔗 Copy Link</button>
         `;
         container.appendChild(card);
+      });
+    }
+
+    function copyLink(file) {
+      const url = `${window.location.origin}${window.location.pathname}?id=${file}`;
+      navigator.clipboard.writeText(url).then(() => {
+        const bubble = document.getElementById('bubble');
+        bubble.textContent = "🔗 Copied!";
+        bubble.classList.add('show');
+        setTimeout(() => {
+          bubble.classList.remove('show');
+        }, 2000);
+      }).catch(() => {
+        alert("Couldn't copy link 😿");
       });
     }
 
@@ -212,7 +228,6 @@
         content = parts.slice(2).join('---').trim();
       }
       document.getElementById('reader').innerHTML = marked.parse(content);
-
       const mascot = document.getElementById('mascot');
       const bubble = document.getElementById('bubble');
       mascot.style.transform = 'scale(1.1)';
@@ -225,7 +240,6 @@
         mascot.style.transform = 'scale(1)';
         bubble.classList.remove('show');
       }, 3000);
-
       if (titleFromButton) document.title = `📖 ${titleFromButton} — Hacqueen`;
       document.getElementById('reader').scrollIntoView({ behavior: 'smooth' });
     }
@@ -235,7 +249,6 @@
       const urlParams = new URLSearchParams(window.location.search);
       const fileId = urlParams.get('id');
       const tagFilter = urlParams.get('tag');
-
       if (fileId) {
         document.getElementById('articles').style.display = 'none';
         document.querySelector('.search-bar')?.remove();
