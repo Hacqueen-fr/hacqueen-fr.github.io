@@ -82,6 +82,7 @@
       border-radius: 8px;
       margin-top: 30px;
       box-shadow: 0 0 20px #00ffff20;
+      animation: fadeIn 0.5s ease-in-out;
     }
 
     #reader h2, #reader h3 {
@@ -103,6 +104,11 @@
       border-left: 3px solid #FF2ECC;
       padding-left: 10px;
       color: #ccc;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -156,8 +162,9 @@
       }
 
       const html = marked.parse(content);
-      document.getElementById('reader').innerHTML = html;
-      document.getElementById('reader').scrollIntoView({ behavior: 'smooth' });
+      const reader = document.getElementById('reader');
+      reader.innerHTML = html;
+      reader.scrollIntoView({ behavior: 'smooth' });
     }
 
     loadArticles();
