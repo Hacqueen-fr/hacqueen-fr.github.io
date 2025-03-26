@@ -1,258 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hacqueen — Articles</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Open+Sans&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      padding: 40px;
-      font-family: 'Open Sans', sans-serif;
-      background: linear-gradient(160deg, #0a0a0a, #1e1f3a), url('https://www.transparenttextures.com/patterns/graphy.png');
-      color: #efefef;
-    }
+<!-- début du fichier... même structure qu’avant -->
 
-    h1 {
-      font-family: 'Orbitron', sans-serif;
-      color: #A0E8FF;
-      text-align: center;
-    }
+<!-- 🧠 À la fin de ton <script>, remplace ceci : -->
+<script>
+  const posts = ['first.md', 'second.md', 'third.md']; // liste des fichiers
+  const baseURL = 'https://hacqueen-fr.github.io/posts/';
+  const allArticles = [];
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .search-bar {
-      margin: 20px 0;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .search-bar input, .search-bar select {
-      padding: 10px;
-      border: 1px solid #00FFFF;
-      background: rgba(0, 255, 255, 0.1);
-      border-radius: 5px;
-      color: #00FFFF;
-    }
-
-    .article-card {
-      background: rgba(255, 255, 255, 0.03);
-      border-left: 3px solid #00FFFF;
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-    }
-
-    .article-card h2 {
-      margin: 0 0 10px;
-      color: #FF2ECC;
-    }
-
-    .tags {
-      margin: 10px 0;
-    }
-
-    .tag {
-      display: inline-block;
-      margin: 2px 5px 2px 0;
-      padding: 5px 10px;
-      background: rgba(255, 46, 204, 0.2);
-      border: 1px solid #FF2ECC;
-      border-radius: 5px;
-      font-size: 0.8em;
-      color: #FF2ECC;
-    }
-
-    .button {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 15px;
-      border: 1px solid #00FFFF;
-      background: rgba(0, 255, 255, 0.1);
-      color: #00FFFF;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .button:hover {
-      background: rgba(255, 46, 204, 0.2);
-      color: #FF2ECC;
-    }
-
-    #reader {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid #00ffff40;
-      padding: 20px;
-      border-radius: 8px;
-      margin-top: 30px;
-    }
-
-    /* Mascotte */
-    .mascot {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 100px;
-      border-radius: 50%;
-      filter: drop-shadow(0 0 10px #00ffff);
-      z-index: 10;
-      transition: transform 0.3s ease;
-    }
-
-    .mascot.active {
-      transform: scale(1.1) rotate(-2deg);
-    }
-
-    .bubble {
-      position: fixed;
-      bottom: 130px;
-      right: 130px;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 10px 15px;
-      border-radius: 10px;
-      border: 1px solid #00FFFF;
-      color: #A0E8FF;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      font-size: 0.9em;
-    }
-
-    .bubble.show {
-      opacity: 1;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <a href="index.html" class="button">← Back to Home</a>
-    <h1>Articles & Write-Ups</h1>
-
-    <div class="search-bar">
-      <input type="text" id="search" placeholder="Search articles..." />
-      <select id="tagFilter">
-        <option value="">All Tags</option>
-      </select>
-    </div>
-
-    <div id="articles"></div>
-    <div id="reader"></div>
-  </div>
-
-  <img src="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cyber_cat.png" class="mascot" id="mascot" />
-  <div class="bubble" id="bubble">Meow</div>
-
-  <script>
-    const posts = ['first.md', 'second.md', 'third.md']; // à adapter selon ton repo
-    const baseURL = 'https://hacqueen-fr.github.io/posts/';
-    const allArticles = [];
-
-    async function loadArticles() {
-      const tagSet = new Set();
-      for (const file of posts) {
-        const res = await fetch(baseURL + file);
-        const text = await res.text();
-
-        let content = text;
-        if (text.startsWith('---')) {
-          const parts = text.split('---');
-          content = parts.slice(2).join('---').trim();
-        }
-
-        const title = text.match(/title:\s*(.*)/)?.[1]?.trim() || file;
-        const date = text.match(/date:\s*(.*)/)?.[1]?.trim() || '';
-        const description = text.match(/description:\s*(.*)/)?.[1]?.trim() || 'No description.';
-        const tagsRaw = text.match(/tags:\s*\[(.*?)\]/)?.[1] || '';
-        const tags = tagsRaw.split(',').map(t => t.trim().replace(/['"]/g, '')).filter(Boolean);
-
-        tags.forEach(tag => tagSet.add(tag));
-
-        allArticles.push({ file, title, date, description, tags, content });
-      }
-
-      updateTagFilter([...tagSet]);
-      displayArticles(allArticles);
-    }
-
-    function updateTagFilter(tags) {
-      const select = document.getElementById('tagFilter');
-      tags.sort().forEach(tag => {
-        const option = document.createElement('option');
-        option.value = tag;
-        option.textContent = tag;
-        select.appendChild(option);
-      });
-    }
-
-    function displayArticles(articles) {
-      const container = document.getElementById('articles');
-      container.innerHTML = '';
-
-      articles.forEach(article => {
-        const card = document.createElement('div');
-        card.className = 'article-card';
-        card.innerHTML = `
-          <h2>${article.title}</h2>
-          <p><em>${article.date}</em></p>
-          <p>${article.description}</p>
-          <div class="tags">${article.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>
-          <button class="button" onclick="displayArticle('${article.file}')">📖 Read</button>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    async function displayArticle(file) {
+  async function loadArticles() {
+    const tagSet = new Set();
+    for (const file of posts) {
       const res = await fetch(baseURL + file);
-      const raw = await res.text();
+      const text = await res.text();
 
-      let content = raw;
-      if (raw.startsWith('---')) {
-        const parts = raw.split('---');
+      let content = text;
+      if (text.startsWith('---')) {
+        const parts = text.split('---');
         content = parts.slice(2).join('---').trim();
       }
 
-      const html = marked.parse(content);
-      const reader = document.getElementById('reader');
-      reader.innerHTML = html;
+      const title = text.match(/title:\s*(.*)/)?.[1]?.trim() || file;
+      const date = text.match(/date:\s*(.*)/)?.[1]?.trim() || '';
+      const description = text.match(/description:\s*(.*)/)?.[1]?.trim() || 'No description.';
+      const tagsRaw = text.match(/tags:\s*\[(.*?)\]/)?.[1] || '';
+      const tags = tagsRaw.split(',').map(t => t.trim().replace(/['"]/g, '')).filter(Boolean);
 
-      // mascotte et bulle
-      const mascot = document.getElementById('mascot');
-      const bubble = document.getElementById('bubble');
-      mascot.classList.add('active');
-      bubble.classList.add('show');
-      setTimeout(() => {
-        mascot.classList.remove('active');
-        bubble.classList.remove('show');
-      }, 1800);
+      tags.forEach(tag => tagSet.add(tag));
 
-      reader.scrollIntoView({ behavior: 'smooth' });
+      allArticles.push({ file, title, date, description, tags, content });
     }
 
-    // Recherche dynamique
-    document.getElementById('search').addEventListener('input', e => {
-      const value = e.target.value.toLowerCase();
-      const filtered = allArticles.filter(a =>
-        a.title.toLowerCase().includes(value) ||
-        a.description.toLowerCase().includes(value) ||
-        a.tags.some(tag => tag.toLowerCase().includes(value))
-      );
-      displayArticles(filtered);
-    });
+    updateTagFilter([...tagSet]);
+    displayArticles(allArticles);
+  }
 
-    // Tri par tag
-    document.getElementById('tagFilter').addEventListener('change', e => {
-      const tag = e.target.value;
-      const filtered = tag ? allArticles.filter(a => a.tags.includes(tag)) : allArticles;
-      displayArticles(filtered);
+  function updateTagFilter(tags) {
+    const select = document.getElementById('tagFilter');
+    tags.sort().forEach(tag => {
+      const option = document.createElement('option');
+      option.value = tag;
+      option.textContent = tag;
+      select.appendChild(option);
     });
+  }
 
-    loadArticles();
-  </script>
-</body>
-</html>
+  function displayArticles(articles) {
+    const container = document.getElementById('articles');
+    container.innerHTML = '';
+
+    articles.forEach(article => {
+      const card = document.createElement('div');
+      card.className = 'article-card';
+      card.innerHTML = `
+        <h2>${article.title}</h2>
+        <p><em>${article.date}</em></p>
+        <p>${article.description}</p>
+        <div class="tags">${article.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>
+        <button class="button" onclick="displayArticle('${article.file}')">📖 Read</button>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  async function displayArticle(file) {
+    const res = await fetch(baseURL + file);
+    const raw = await res.text();
+
+    let content = raw;
+    if (raw.startsWith('---')) {
+      const parts = raw.split('---');
+      content = parts.slice(2).join('---').trim();
+    }
+
+    const html = marked.parse(content);
+    const reader = document.getElementById('reader');
+    reader.innerHTML = html;
+
+    const mascot = document.getElementById('mascot');
+    const bubble = document.getElementById('bubble');
+    mascot.classList.add('active');
+    bubble.classList.add('show');
+    setTimeout(() => {
+      mascot.classList.remove('active');
+      bubble.classList.remove('show');
+    }, 1800);
+
+    reader.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  document.getElementById('search').addEventListener('input', e => {
+    const value = e.target.value.toLowerCase();
+    const filtered = allArticles.filter(a =>
+      a.title.toLowerCase().includes(value) ||
+      a.description.toLowerCase().includes(value) ||
+      a.tags.some(tag => tag.toLowerCase().includes(value))
+    );
+    displayArticles(filtered);
+  });
+
+  document.getElementById('tagFilter').addEventListener('change', e => {
+    const tag = e.target.value;
+    const filtered = tag ? allArticles.filter(a => a.tags.includes(tag)) : allArticles;
+    displayArticles(filtered);
+  });
+
+  loadArticles();
+
+  // ✅ NOUVEAU : Affichage direct via ?id=filename.md
+  const urlParams = new URLSearchParams(window.location.search);
+  const fileId = urlParams.get('id');
+  if (fileId) {
+    document.getElementById('articles').style.display = 'none';
+    document.querySelector('.search-bar')?.remove();
+    displayArticle(fileId);
+  }
+</script>
