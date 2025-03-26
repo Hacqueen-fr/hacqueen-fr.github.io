@@ -44,7 +44,8 @@
 
     .carousel-wrapper {
       position: relative;
-      overflow: hidden;
+      overflow: visible;
+      padding-inline: 40px;
     }
 
     .carousel {
@@ -52,7 +53,7 @@
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       gap: 20px;
-      padding: 20px 40px;
+      padding-bottom: 20px;
       scroll-behavior: smooth;
     }
 
@@ -116,13 +117,8 @@
       z-index: 2;
     }
 
-    .arrow-left {
-      left: -20px;
-    }
-
-    .arrow-right {
-      right: -20px;
-    }
+    .arrow-left { left: -20px; }
+    .arrow-right { right: -20px; }
 
     #reader {
       background: rgba(255, 255, 255, 0.02);
@@ -250,6 +246,7 @@
       const container = document.getElementById('articles');
       container.innerHTML = '';
       articles.forEach(article => {
+        const safeTitle = article.title.replace(/'/g, "\\'");
         const card = document.createElement('div');
         card.className = 'article-card';
         card.innerHTML = `
@@ -257,7 +254,7 @@
           <p><em>${article.date}</em></p>
           <p>${article.description}</p>
           <div class="tags">${article.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>
-          <button class="button" onclick="displayArticle('${article.file}', '${article.title}')">📖 Read</button>
+          <button class="button" onclick="displayArticle('${article.file}', '${safeTitle}')">📖 Read</button>
           <button class="button" onclick="copyLink('${article.file}')">🔗 Copy Link</button>
           <button class="button" onclick="shareToX('${article.file}')">🐦 Share</button>
           <button class="button" onclick="shareToMastodon('${article.file}')">🐘 Mastodon</button>
@@ -274,9 +271,7 @@
 
     function copyLink(file) {
       const url = `${window.location.origin}${window.location.pathname}?id=${file}`;
-      navigator.clipboard.writeText(url).then(() => {
-        showBubble("🔗 Copied!");
-      });
+      navigator.clipboard.writeText(url).then(() => showBubble("🔗 Copied!"));
     }
 
     function showBubble(text) {
@@ -305,7 +300,6 @@
       const raw = await res.text();
       const content = raw.startsWith('---') ? raw.split('---').slice(2).join('---').trim() : raw;
       document.getElementById('reader').innerHTML = marked.parse(content);
-
       const mascot = document.getElementById('mascot');
       const bubble = document.getElementById('bubble');
       mascot.style.transform = 'scale(1.1)';
@@ -318,7 +312,6 @@
         mascot.style.transform = 'scale(1)';
         bubble.classList.remove('show');
       }, 3000);
-
       if (titleFromButton) {
         document.title = `📖 ${titleFromButton} — Hacqueen`;
       }
