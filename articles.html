@@ -187,8 +187,6 @@
         content = parts.slice(2).join('---').trim();
       }
       document.getElementById('reader').innerHTML = marked.parse(content);
-
-      // mascotte + bulle
       const mascot = document.getElementById('mascot');
       const bubble = document.getElementById('bubble');
       mascot.style.transform = 'scale(1.1)';
@@ -197,31 +195,10 @@
         mascot.style.transform = 'scale(1)';
         bubble.classList.remove('show');
       }, 1800);
-
-      // changer le titre
       if (titleFromButton) document.title = `📖 ${titleFromButton} — Hacqueen`;
       document.getElementById('reader').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Recherche
-    document.getElementById('search').addEventListener('input', e => {
-      const value = e.target.value.toLowerCase();
-      const filtered = allArticles.filter(a =>
-        a.title.toLowerCase().includes(value) ||
-        a.description.toLowerCase().includes(value) ||
-        a.tags.some(tag => tag.toLowerCase().includes(value))
-      );
-      displayArticles(filtered);
-    });
-
-    // Tag select
-    document.getElementById('tagFilter').addEventListener('change', e => {
-      const tag = e.target.value;
-      const filtered = tag ? allArticles.filter(a => a.tags.includes(tag)) : allArticles;
-      displayArticles(filtered);
-    });
-
-    // Chargement avec URL id ou tag
     async function start() {
       await loadArticles();
       const urlParams = new URLSearchParams(window.location.search);
@@ -237,6 +214,24 @@
         document.getElementById('tagFilter').value = tagFilter;
         displayArticles(filtered);
       }
+    }
+
+    if (!window.location.search.includes('id=')) {
+      document.getElementById('search').addEventListener('input', e => {
+        const value = e.target.value.toLowerCase();
+        const filtered = allArticles.filter(a =>
+          a.title.toLowerCase().includes(value) ||
+          a.description.toLowerCase().includes(value) ||
+          a.tags.some(tag => tag.toLowerCase().includes(value))
+        );
+        displayArticles(filtered);
+      });
+
+      document.getElementById('tagFilter').addEventListener('change', e => {
+        const tag = e.target.value;
+        const filtered = tag ? allArticles.filter(a => a.tags.includes(tag)) : allArticles;
+        displayArticles(filtered);
+      });
     }
 
     start();
