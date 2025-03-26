@@ -32,6 +32,16 @@
       padding: 20px;
       border-radius: 8px;
       margin-bottom: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .article-card:hover {
+      transform: scale(1.01);
+    }
+
+    .article-card h2 {
+      margin: 0 0 10px;
+      color: #FF2ECC;
     }
 
     .button {
@@ -43,6 +53,7 @@
       color: #00FFFF;
       border-radius: 5px;
       cursor: pointer;
+      transition: 0.3s ease;
     }
 
     .button:hover {
@@ -56,6 +67,7 @@
       padding: 20px;
       border-radius: 8px;
       margin-top: 30px;
+      box-shadow: 0 0 10px rgba(0,255,255,0.1);
     }
 
     /* Mascotte */
@@ -64,6 +76,7 @@
       bottom: 20px;
       right: 20px;
       width: 100px;
+      border-radius: 50%;
       filter: drop-shadow(0 0 10px #00ffff);
       z-index: 10;
       transition: transform 0.3s ease;
@@ -84,6 +97,7 @@
       color: #A0E8FF;
       opacity: 0;
       transition: opacity 0.3s ease;
+      font-size: 0.9em;
     }
 
     .bubble.show {
@@ -96,29 +110,48 @@
     <a href="index.html" class="button">← Back to Home</a>
     <h1>Articles & Write-Ups</h1>
 
-    <div id="articles">
-      <div class="article-card">
-        <h2>My First CTF</h2>
-        <p><em>2025-03-26</em></p>
-        <p>A write-up of my first hacking challenge 🐾</p>
-        <button class="button" onclick="displayArticle('first.md')">📖 Read</button>
-      </div>
-    </div>
-
+    <div id="articles"></div>
     <div id="reader"></div>
   </div>
 
+  <!-- Mascotte & bulle -->
   <img src="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cyber_cat.png" class="mascot" id="mascot" />
-  <div class="bubble" id="bubble">Meow! Article loaded~ 🐾</div>
+  <div class="bubble" id="bubble">Meow</div>
 
   <script>
+    const posts = ['first.md']; // Ajoute ici d'autres fichiers plus tard
+    const baseURL = 'https://hacqueen-fr.github.io/posts/';
+
+    async function loadArticles() {
+      const container = document.getElementById('articles');
+
+      for (const file of posts) {
+        const res = await fetch(baseURL + file);
+        const text = await res.text();
+
+        const title = text.match(/title:\s*(.*)/)?.[1]?.trim() || file;
+        const date = text.match(/date:\s*(.*)/)?.[1]?.trim() || '';
+        const description = text.match(/description:\s*(.*)/)?.[1]?.trim() || 'No description.';
+
+        const card = document.createElement('div');
+        card.className = 'article-card';
+        card.innerHTML = `
+          <h2>${title}</h2>
+          <p><em>${date}</em></p>
+          <p>${description}</p>
+          <button class="button" onclick="displayArticle('${file}')">📖 Read</button>
+        `;
+        container.appendChild(card);
+      }
+    }
+
     async function displayArticle(file) {
       const mascot = document.getElementById('mascot');
       const bubble = document.getElementById('bubble');
       const reader = document.getElementById('reader');
 
       try {
-        const res = await fetch('https://hacqueen-fr.github.io/posts/' + file);
+        const res = await fetch(baseURL + file);
         const text = await res.text();
 
         let content = text;
@@ -131,16 +164,19 @@
 
         mascot.classList.add('active');
         bubble.classList.add('show');
-
         setTimeout(() => {
           mascot.classList.remove('active');
           bubble.classList.remove('show');
-        }, 2000);
+        }, 1800);
+
+        reader.scrollIntoView({ behavior: 'smooth' });
       } catch (err) {
-        reader.innerHTML = "<p>⚠️ Unable to load article.</p>";
+        reader.innerHTML = '<p>⚠️ Unable to load the article.</p>';
         console.error(err);
       }
     }
+
+    loadArticles();
   </script>
 </body>
 </html>
