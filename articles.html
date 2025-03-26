@@ -28,6 +28,7 @@
     .container {
       max-width: 900px;
       margin: 0 auto;
+      position: relative;
     }
 
     .article-card {
@@ -85,6 +86,21 @@
       animation: fadeIn 0.5s ease-in-out;
     }
 
+    #reader p, #reader h2, #reader h3, #reader ul, #reader ol, #reader pre, #reader blockquote {
+      opacity: 0;
+      animation: cyberFade 0.5s ease forwards;
+    }
+
+    @keyframes cyberFade {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     #reader h2, #reader h3 {
       color: #A0E8FF;
     }
@@ -106,9 +122,22 @@
       color: #ccc;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* 🐾 Mascotte */
+    .mascot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 100px;
+      filter: drop-shadow(0 0 10px #00ffff);
+      opacity: 0.7;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      z-index: 10;
+    }
+
+    .mascot.active {
+      transform: scale(1.1) rotate(-2deg);
+      opacity: 1;
+      filter: drop-shadow(0 0 20px #FF2ECC);
     }
   </style>
 </head>
@@ -120,6 +149,9 @@
     <div id="articles"></div>
     <div id="reader"></div>
   </div>
+
+  <!-- 🐱 Mascotte animée -->
+  <img src="assets/img/cyber_cat_mascot.png" alt="Cyber Mascot" class="mascot" id="mascot" />
 
   <script>
     const posts = ['first.md'];
@@ -164,6 +196,18 @@
       const html = marked.parse(content);
       const reader = document.getElementById('reader');
       reader.innerHTML = html;
+
+      // Effet ligne par ligne
+      const children = reader.querySelectorAll('p, h2, h3, ul, ol, pre, blockquote');
+      children.forEach((el, i) => {
+        el.style.animationDelay = `${i * 80}ms`;
+      });
+
+      // Active la mascotte ✨
+      const mascot = document.getElementById('mascot');
+      mascot.classList.add('active');
+      setTimeout(() => mascot.classList.remove('active'), 1000);
+
       reader.scrollIntoView({ behavior: 'smooth' });
     }
 
