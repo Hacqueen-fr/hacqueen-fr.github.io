@@ -1,5 +1,10 @@
-
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Open+Sans&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sidney Falhun - Resume</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Open+Sans&display=swap" rel="stylesheet" />
   <style>
     body {
       margin: 0;
@@ -150,28 +155,80 @@
     .section-icon-Communauté::before { content: '🌐'; }
     .section-icon-Formation::before { content: '🎓'; }
     .section-icon-Langues::before { content: '🌍'; }
+
+    .top-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .top-buttons a {
+      text-decoration: none;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .home-button {
+      color: #00FFFF;
+      border: 1px solid #00FFFF;
+      background-color: rgba(0, 255, 255, 0.1);
+    }
+
+    .home-button:hover {
+      color: #FF2ECC;
+      border-color: #FF2ECC;
+      background-color: rgba(255, 46, 204, 0.1);
+    }
+
+    .download-button {
+      color: #FF2ECC;
+      border: 1px solid #FF2ECC;
+      background-color: rgba(255, 46, 204, 0.1);
+    }
+
+    .download-button:hover {
+      color: #00FFFF;
+      border-color: #00FFFF;
+      background-color: rgba(0, 255, 255, 0.1);
+    }
   </style>
 </head>
 <body>
   <div style="max-width: 1000px; margin: 0 auto;">
+    <!-- Top Buttons -->
+    <div class="top-buttons">
+      <a href="index.html" class="home-button">← Back to Home</a>
+      <a href="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cv_sidney.pdf" class="download-button" target="_blank">📄 Download PDF Resume</a>
+    </div>
+
+    <!-- Header -->
     <div class="header">
       <div style="display: flex; flex-direction: column;">
         <h1 class="glow" style="margin: 0;">Sidney Falhun</h1>
         <span style="font-size: 0.95em; color: #cccccc; font-style: italic; font-family: 'Orbitron', sans-serif; margin-top: 4px;">Just Hacqueen</span>
       </div>
-      <img src="https://avatars.githubusercontent.com/u/114197273?v=4" alt="Photo of Sidney Falhun" class="photo" style="border-radius: 12px; width: 160px; height: auto; object-fit: cover; box-shadow: 0 0 30px #FF2ECCAA; border: 3px solid #FF2ECC;">
+      <img src="https://avatars.githubusercontent.com/u/114197273?v=4" alt="Photo of Sidney Falhun" class="photo" />
     </div>
 
+    <!-- Info -->
     <div class="info">
       <div class="info-item">📍 Cybersecurity Consultant — Rennes / Remote</div>
       <div class="info-item">📧 sysdnety@gmail.com</div>
       <div class="info-item">📞 ask me</div>
-      <div class="info-item">💻 <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="16" style="vertical-align: middle; margin-right: 5px;"> <a href="https://www.linkedin.com/in/sidney-falhun-04a363297/" target="_blank" style="color:#00FFFF;text-decoration:none;">LinkedIn</a> 
-          • <img src="https://www.root-me.org/squelettes/img/rblack.ico?1448449194" alt="Root-Me" width="16" style="vertical-align: middle; margin-right: 5px;"> <a href="https://www.root-me.org/Hacqueen" target="_blank" style="color:#00FFFF;text-decoration:none;">Root-Me</a></div>
+      <div class="info-item">💻 
+        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="16" style="vertical-align: middle; margin-right: 5px;">
+        <a href="https://www.linkedin.com/in/sidney-falhun-04a363297/" target="_blank">LinkedIn</a> • 
+        <img src="https://www.root-me.org/squelettes/img/rblack.ico?1448449194" width="16" style="vertical-align: middle; margin-right: 5px;">
+        <a href="https://www.root-me.org/Hacqueen" target="_blank">Root-Me</a>
+      </div>
     </div>
 
     <hr class="line" />
 
+    <!-- Sections -->
     <div class="section">
       <h2>🌟 Profile</h2>
       <p>Cybersecurity enthusiast since 2011 with 6 years of experience in software development and over a year in both offensive and defensive security. Skilled in vulnerability analysis, Python automation, SIEM tools (Sentinel), forensic and OSINT investigations. Active community member, co-founder of OSINT-FR, conference speaker, and former organizer of Sigsegv. Passionate about joining innovative and collaborative tech teams.</p>
@@ -180,12 +237,12 @@
     <div class="section">
       <h2>🔨 Technical Skills</h2>
       <div class="skills">
-        <div class="skill"><strong>Langages</strong> : Python, PowerShell, C#, JavaScript, Bash, PHP, C, C++</div>
-        <div class="skill"><strong>Sécurité</strong> : Microsoft Sentinel, WithSecure, DependencyCheck, O365 Security & Compliance</div>
-        <div class="skill"><strong>CTI / OSINT</strong> : PowerBi, techniques d’investigation</div>
+        <div class="skill"><strong>Languages</strong> : Python, PowerShell, C#, JavaScript, Bash, PHP, C, C++</div>
+        <div class="skill"><strong>Security</strong> : Microsoft Sentinel, WithSecure, DependencyCheck, O365 Security & Compliance</div>
+        <div class="skill"><strong>CTI / OSINT</strong> : PowerBi, investigation techniques</div>
         <div class="skill"><strong>Dev</strong> : SharePoint, PowerApps, Flow, AngularJS, Android, Web backend, Git</div>
-        <div class="skill"><strong>Outils</strong> : VS Code, Burp Suite, Nessus, Nmap</div>
-        <div class="skill"><strong>Forensic</strong> : Autopsy, Volatility, Analyse mémoire & disques, Wireshark</div>
+        <div class="skill"><strong>Tools</strong> : VS Code, Burp Suite, Nessus, Nmap</div>
+        <div class="skill"><strong>Forensic</strong> : Autopsy, Volatility, Memory & Disk analysis, Wireshark</div>
         <div class="skill"><strong>RE & Mobile</strong> : Ghidra, Jadx, Frida</div>
       </div>
     </div>
@@ -198,22 +255,22 @@
         <li>Vulnerability tracking and management (WithSecure, DependencyCheck)</li>
         <li>Process automation using Python</li>
         <li>Integration and management of Microsoft Sentinel (SIEM)</li>
-        <li>Wrote security recommendations for developers</li>
-        <li>Awareness sessions on O365 data classification / GDPR</li>
+        <li>Security recommendations for developers</li>
+        <li>O365 data classification / GDPR awareness</li>
         <li>Security Assurance Plan (PAS) review</li>
       </ul>
 
       <h3>📅 CGI France — SharePoint / O365 Developer<br><small>October 2017 – June 2023</small></h3>
       <ul>
-        <li>Designed PowerApps applications and workflows using Flow</li>
-        <li>Automated tasks using PowerShell</li>
-        <li>Integrated forms using AngularJS & SharePoint 2013</li>
+        <li>PowerApps applications and Flow workflows</li>
+        <li>Task automation with PowerShell</li>
+        <li>AngularJS & SharePoint 2013 integration</li>
       </ul>
 
       <h3>📅 CGI France — Android Developer<br><small>April 2017 – October 2017</small></h3>
       <ul>
-        <li>Developed an expense management mobile app</li>
-        <li>Integrated data using OCR (Kofax Total Agility)</li>
+        <li>Expense management mobile app</li>
+        <li>OCR data integration (Kofax Total Agility)</li>
       </ul>
     </div>
 
@@ -221,10 +278,10 @@
       <h2>🎤 Community & CTF</h2>
       <ul>
         <li>📢 Speaker @ LeHack 2019 — OSINT & PowerBI Workshop</li>
-        <li>🧠 Co-founder of the OSINT-FR community</li>
-        <li>🛠️ Staff member at Sigsegv1 & 2</li>
+        <li>🧠 Co-founder of OSINT-FR</li>
+        <li>🛠️ Sigsegv staff</li>
         <li>⚡ CTF Player — LeHack, BreizhCTF, CTFTime, Root-Me</li>
-        <li>🗓️ Technical watch and internal demo sessions at CGI</li>
+        <li>🗓️ Internal demo sessions @ CGI</li>
       </ul>
     </div>
 
@@ -240,4 +297,4 @@
     </div>
   </div>
 </body>
-
+</html>
