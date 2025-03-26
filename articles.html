@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hacqueen — Articles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Open+Sans&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: 'Open Sans', sans-serif;
+      background: linear-gradient(160deg, #0a0a0a, #1e1f3a), url('https://www.transparenttextures.com/patterns/graphy.png');
+      background-repeat: repeat;
+      background-size: auto;
+      color: #efefef;
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      color: #A0E8FF;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .article-card {
+      background-color: rgba(255, 255, 255, 0.03);
+      border-left: 3px solid #00FFFF;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .article-card:hover {
+      transform: scale(1.01);
+      box-shadow: 0 0 20px rgba(255, 46, 204, 0.2);
+    }
+
+    .article-card h2 {
+      margin: 0 0 10px;
+      color: #FF2ECC;
+    }
+
+    .article-card p {
+      margin: 0;
+      color: #ccc;
+    }
+
+    .button {
+      display: inline-block;
+      margin: 20px 10px 20px 0;
+      padding: 10px 20px;
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      background-color: rgba(0, 255, 255, 0.1);
+      color: #00FFFF;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: rgba(255, 46, 204, 0.2);
+      color: #FF2ECC;
+      transform: scale(1.05) rotate(-1deg);
+    }
+
+    #reader {
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid #00ffff40;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 30px;
+      box-shadow: 0 0 20px #00ffff20;
+    }
+
+    #reader h2, #reader h3 {
+      color: #A0E8FF;
+    }
+
+    #reader pre {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      overflow-x: auto;
+      border-radius: 4px;
+    }
+
+    #reader code {
+      color: #FF2ECC;
+    }
+
+    #reader blockquote {
+      border-left: 3px solid #FF2ECC;
+      padding-left: 10px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="button">← Back to Home</a>
+    <h1>Articles & Write-Ups</h1>
+
+    <div id="articles"></div>
+
+    <div id="reader"></div>
+  </div>
+
+  <script>
+    const posts = ['first.md']; // ajoute ici tes futurs fichiers .md
+
+    async function loadArticles() {
+      const container = document.getElementById('articles');
+      for (const file of posts) {
+        const res = await fetch('posts/' + file);
+        const text = await res.text();
+
+        const titleMatch = text.match(/title:\s*(.*)/);
+        const dateMatch = text.match(/date:\s*(.*)/);
+        const descMatch = text.match(/description:\s*(.*)/);
+
+        const title = titleMatch ? titleMatch[1].trim() : file;
+        const date = dateMatch ? dateMatch[1].trim() : '';
+        const description = descMatch ? descMatch[1].trim() : 'No description.';
+
+        const card = document.createElement('div');
+        card.className = 'article-card';
+        card.innerHTML = `
+          <h2>${title}</h2>
+          <p><em>${date}</em></p>
+          <p>${description}</p>
+          <button class="button" onclick="displayArticle('${file}')">📖 Read</button>
+        `;
+        container.appendChild(card);
+      }
+    }
+
+    async function displayArticle(file) {
+      const res = await fetch('posts/' + file);
+      const raw = await res.text();
+
+      const content = raw.split('---').slice(2).join('---').trim(); // skip frontmatter
+      const html = marked.parse(content);
+      document.getElementById('reader').innerHTML = html;
+      document.getElementById('reader').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    loadArticles();
+  </script>
+</body>
+</html>
