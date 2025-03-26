@@ -26,17 +26,27 @@
       margin: auto;
     }
 
+    .search-bar {
+      margin: 20px 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-bar input, .search-bar select {
+      padding: 10px;
+      border: 1px solid #00FFFF;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 5px;
+      color: #00FFFF;
+    }
+
     .article-card {
       background: rgba(255, 255, 255, 0.03);
       border-left: 3px solid #00FFFF;
       padding: 20px;
       border-radius: 8px;
       margin-bottom: 20px;
-      transition: transform 0.3s ease;
-    }
-
-    .article-card:hover {
-      transform: scale(1.01);
     }
 
     .article-card h2 {
@@ -44,16 +54,30 @@
       color: #FF2ECC;
     }
 
-    .button {
-      margin-top: 10px;
+    .tags {
+      margin: 10px 0;
+    }
+
+    .tag {
       display: inline-block;
+      margin: 2px 5px 2px 0;
+      padding: 5px 10px;
+      background: rgba(255, 46, 204, 0.2);
+      border: 1px solid #FF2ECC;
+      border-radius: 5px;
+      font-size: 0.8em;
+      color: #FF2ECC;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 10px;
       padding: 10px 15px;
       border: 1px solid #00FFFF;
       background: rgba(0, 255, 255, 0.1);
       color: #00FFFF;
       border-radius: 5px;
       cursor: pointer;
-      transition: 0.3s ease;
     }
 
     .button:hover {
@@ -63,11 +87,10 @@
 
     #reader {
       background: rgba(255, 255, 255, 0.02);
-      border: 1px solid #00FFFF40;
+      border: 1px solid #00ffff40;
       padding: 20px;
       border-radius: 8px;
       margin-top: 30px;
-      box-shadow: 0 0 10px rgba(0,255,255,0.1);
     }
 
     /* Mascotte */
@@ -110,47 +133,28 @@
     <a href="index.html" class="button">← Back to Home</a>
     <h1>Articles & Write-Ups</h1>
 
+    <div class="search-bar">
+      <input type="text" id="search" placeholder="Search articles..." />
+      <select id="tagFilter">
+        <option value="">All Tags</option>
+      </select>
+    </div>
+
     <div id="articles"></div>
     <div id="reader"></div>
   </div>
 
-  <!-- Mascotte & bulle -->
   <img src="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cyber_cat.png" class="mascot" id="mascot" />
   <div class="bubble" id="bubble">Meow</div>
 
   <script>
-    const posts = ['first.md']; // Ajoute ici d'autres fichiers plus tard
+    const posts = ['first.md', 'second.md', 'third.md']; // à adapter selon ton repo
     const baseURL = 'https://hacqueen-fr.github.io/posts/';
+    const allArticles = [];
 
     async function loadArticles() {
-      const container = document.getElementById('articles');
-
+      const tagSet = new Set();
       for (const file of posts) {
-        const res = await fetch(baseURL + file);
-        const text = await res.text();
-
-        const title = text.match(/title:\s*(.*)/)?.[1]?.trim() || file;
-        const date = text.match(/date:\s*(.*)/)?.[1]?.trim() || '';
-        const description = text.match(/description:\s*(.*)/)?.[1]?.trim() || 'No description.';
-
-        const card = document.createElement('div');
-        card.className = 'article-card';
-        card.innerHTML = `
-          <h2>${title}</h2>
-          <p><em>${date}</em></p>
-          <p>${description}</p>
-          <button class="button" onclick="displayArticle('${file}')">📖 Read</button>
-        `;
-        container.appendChild(card);
-      }
-    }
-
-    async function displayArticle(file) {
-      const mascot = document.getElementById('mascot');
-      const bubble = document.getElementById('bubble');
-      const reader = document.getElementById('reader');
-
-      try {
         const res = await fetch(baseURL + file);
         const text = await res.text();
 
@@ -160,21 +164,93 @@
           content = parts.slice(2).join('---').trim();
         }
 
-        reader.innerHTML = marked.parse(content);
+        const title = text.match(/title:\s*(.*)/)?.[1]?.trim() || file;
+        const date = text.match(/date:\s*(.*)/)?.[1]?.trim() || '';
+        const description = text.match(/description:\s*(.*)/)?.[1]?.trim() || 'No description.';
+        const tagsRaw = text.match(/tags:\s*\[(.*?)\]/)?.[1] || '';
+        const tags = tagsRaw.split(',').map(t => t.trim().replace(/['"]/g, '')).filter(Boolean);
 
-        mascot.classList.add('active');
-        bubble.classList.add('show');
-        setTimeout(() => {
-          mascot.classList.remove('active');
-          bubble.classList.remove('show');
-        }, 1800);
+        tags.forEach(tag => tagSet.add(tag));
 
-        reader.scrollIntoView({ behavior: 'smooth' });
-      } catch (err) {
-        reader.innerHTML = '<p>⚠️ Unable to load the article.</p>';
-        console.error(err);
+        allArticles.push({ file, title, date, description, tags, content });
       }
+
+      updateTagFilter([...tagSet]);
+      displayArticles(allArticles);
     }
+
+    function updateTagFilter(tags) {
+      const select = document.getElementById('tagFilter');
+      tags.sort().forEach(tag => {
+        const option = document.createElement('option');
+        option.value = tag;
+        option.textContent = tag;
+        select.appendChild(option);
+      });
+    }
+
+    function displayArticles(articles) {
+      const container = document.getElementById('articles');
+      container.innerHTML = '';
+
+      articles.forEach(article => {
+        const card = document.createElement('div');
+        card.className = 'article-card';
+        card.innerHTML = `
+          <h2>${article.title}</h2>
+          <p><em>${article.date}</em></p>
+          <p>${article.description}</p>
+          <div class="tags">${article.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>
+          <button class="button" onclick="displayArticle('${article.file}')">📖 Read</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    async function displayArticle(file) {
+      const res = await fetch(baseURL + file);
+      const raw = await res.text();
+
+      let content = raw;
+      if (raw.startsWith('---')) {
+        const parts = raw.split('---');
+        content = parts.slice(2).join('---').trim();
+      }
+
+      const html = marked.parse(content);
+      const reader = document.getElementById('reader');
+      reader.innerHTML = html;
+
+      // mascotte et bulle
+      const mascot = document.getElementById('mascot');
+      const bubble = document.getElementById('bubble');
+      mascot.classList.add('active');
+      bubble.classList.add('show');
+      setTimeout(() => {
+        mascot.classList.remove('active');
+        bubble.classList.remove('show');
+      }, 1800);
+
+      reader.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Recherche dynamique
+    document.getElementById('search').addEventListener('input', e => {
+      const value = e.target.value.toLowerCase();
+      const filtered = allArticles.filter(a =>
+        a.title.toLowerCase().includes(value) ||
+        a.description.toLowerCase().includes(value) ||
+        a.tags.some(tag => tag.toLowerCase().includes(value))
+      );
+      displayArticles(filtered);
+    });
+
+    // Tri par tag
+    document.getElementById('tagFilter').addEventListener('change', e => {
+      const tag = e.target.value;
+      const filtered = tag ? allArticles.filter(a => a.tags.includes(tag)) : allArticles;
+      displayArticles(filtered);
+    });
 
     loadArticles();
   </script>
