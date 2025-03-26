@@ -112,17 +112,17 @@
     <h1>Articles & Write-Ups</h1>
 
     <div id="articles"></div>
-
     <div id="reader"></div>
   </div>
 
   <script>
-    const posts = ['first.md']; // ajoute ici tes futurs fichiers .md
+    const posts = ['first.md'];
+    const baseURL = 'https://hacqueen-fr.github.io/posts/';
 
     async function loadArticles() {
       const container = document.getElementById('articles');
       for (const file of posts) {
-        const res = await fetch('posts/' + file);
+        const res = await fetch(baseURL + file);
         const text = await res.text();
 
         const titleMatch = text.match(/title:\s*(.*)/);
@@ -146,10 +146,15 @@
     }
 
     async function displayArticle(file) {
-      const res = await fetch('posts/' + file);
+      const res = await fetch(baseURL + file);
       const raw = await res.text();
 
-      const content = raw.split('---').slice(2).join('---').trim(); // skip frontmatter
+      let content = raw;
+      if (raw.startsWith('---')) {
+        const parts = raw.split('---');
+        content = parts.slice(2).join('---').trim();
+      }
+
       const html = marked.parse(content);
       document.getElementById('reader').innerHTML = html;
       document.getElementById('reader').scrollIntoView({ behavior: 'smooth' });
