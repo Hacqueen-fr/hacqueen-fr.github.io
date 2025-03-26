@@ -21,6 +21,7 @@
     .container {
       max-width: 100%;
       margin: auto;
+      position: relative;
     }
     .search-bar {
       margin: 20px auto;
@@ -36,12 +37,17 @@
       border-radius: 5px;
       color: #00FFFF;
     }
+    .carousel-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
     .carousel {
       display: flex;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       gap: 20px;
       padding-bottom: 20px;
+      scroll-behavior: smooth;
     }
     .article-card {
       flex: 0 0 300px;
@@ -83,6 +89,27 @@
       background: rgba(255, 46, 204, 0.2);
       color: #FF2ECC;
     }
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 28px;
+      color: #00FFFF;
+      background: rgba(0,255,255,0.1);
+      border: 1px solid #00FFFF;
+      border-radius: 50%;
+      padding: 8px 14px;
+      cursor: pointer;
+      z-index: 5;
+      transition: all 0.2s ease;
+    }
+    .carousel-arrow:hover {
+      background: rgba(255, 46, 204, 0.2);
+      color: #FF2ECC;
+    }
+    .arrow-left { left: 10px; }
+    .arrow-right { right: 10px; }
+
     #reader {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid #00ffff30;
@@ -154,7 +181,12 @@
       <select id="tagFilter"><option value="">All Tags</option></select>
     </div>
 
-    <div class="carousel" id="articles"></div>
+    <div class="carousel-wrapper">
+      <span class="carousel-arrow arrow-left" onclick="scrollCarousel(-1)">←</span>
+      <div class="carousel" id="articles"></div>
+      <span class="carousel-arrow arrow-right" onclick="scrollCarousel(1)">→</span>
+    </div>
+
     <div id="reader"></div>
   </div>
 
@@ -217,6 +249,12 @@
         `;
         container.appendChild(card);
       });
+    }
+
+    function scrollCarousel(direction) {
+      const carousel = document.getElementById('articles');
+      const scrollAmount = 320; // match card size + gap
+      carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
     }
 
     function copyLink(file) {
