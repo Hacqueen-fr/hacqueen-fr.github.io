@@ -1,10 +1,10 @@
 ---
-title: My First CTF Experience
+title: My First CTF
 date: 2025-03-26
-description: A short write-up about my first steps into the CTF world!
+description: A basic write-up of my first CTF 🐾✨
 ---
 
-## Let's hack ✨
+# Let's hack!
 
-It was a simple challenge, but I learned tons.  
-Burp Suite, base64 decoding, and HTML spelunking... all in one evening.
+It was a fun challenge on Root-Me where I had to use Burp Suite, decode base64, and explore HTML.
+
