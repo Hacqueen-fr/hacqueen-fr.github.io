@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hacqueen - Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Open+Sans&family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: 'Open Sans', sans-serif;
+      background: linear-gradient(160deg, #0a0a0a, #1e1f3a), url('https://www.transparenttextures.com/patterns/graphy.png');
+      background-repeat: repeat;
+      background-size: auto;
+      color: #efefef;
+      font-size: 16px;
+      line-height: 1.6;
+      animation: flickerBg 1s ease-in-out;
+    }
+
+    @keyframes flickerBg {
+      0% { opacity: 0; }
+      25% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+      75% { opacity: 0.9; }
+      100% { opacity: 1; }
+    }
+
+    h1, h2, h3 {
+      font-family: 'Orbitron', sans-serif;
+      text-transform: uppercase;
+      color: #A0E8FF;
+    }
+
+    a {
+      color: #00ffff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #ff2ecc;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .photo {
+      border-radius: 12px;
+      width: 160px;
+      height: auto;
+      object-fit: cover;
+      border: 3px solid #FF2ECC;
+      box-shadow: 0 0 30px #FF2ECCAA;
+    }
+
+    .intro {
+      margin-bottom: 40px;
+    }
+
+    .button {
+      display: inline-block;
+      margin: 10px 10px 0 0;
+      padding: 10px 20px;
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      background-color: rgba(0, 255, 255, 0.1);
+      color: #00FFFF;
+      font-weight: bold;
+      transition: all 0.3s ease, transform 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: rgba(255, 46, 204, 0.2);
+      color: #FF2ECC;
+      transform: scale(1.05) rotate(-1deg);
+    }
+
+    .line {
+      height: 2px;
+      background: linear-gradient(to right, #00FFFF, #A020F0);
+      border: none;
+      margin: 30px 0;
+    }
+
+    .quote {
+      text-align: center;
+      font-style: italic;
+      color: #A0E8FF;
+      margin-bottom: 40px;
+    }
+
+    .glitch {
+      position: relative;
+      color: #A0E8FF;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 2.2em;
+      letter-spacing: 2px;
+      animation: flickerText 1.5s ease-in-out;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      color: #FF2ECC;
+      animation: glitch 1s infinite linear alternate-reverse;
+    }
+
+    .glitch::after {
+      color: #00FFFF;
+      animation-delay: 0.5s;
+    }
+
+    @keyframes glitch {
+      0% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
+      10% { clip: rect(0, 9999px, 100%, 0); transform: translate(-2px, -2px); }
+      20% { clip: rect(0, 9999px, 0, 0); transform: translate(2px, 2px); }
+      30% { clip: rect(0, 9999px, 100%, 0); transform: translate(-1px, 2px); }
+      40% { clip: rect(0, 9999px, 0, 0); transform: translate(2px, -1px); }
+      50% { clip: rect(0, 9999px, 100%, 0); transform: translate(-1px, -1px); }
+      100% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
+    }
+
+    @keyframes flickerText {
+      0% { opacity: 0; }
+      30% { opacity: 0.4; }
+      60% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1 class="glitch" data-text="Sidney Falhun ✨">Sidney Falhun ✨</h1>
+        <p style="font-style: italic; color: #cccccc;">Hacqueen World 🦄</p>
+      </div>
+      <img src="https://avatars.githubusercontent.com/u/114197273?v=4" alt="Photo of Sidney Falhun" class="photo" />
+    </div>
+
+    <div class="intro">
+      <h2>Welcome to my kingdom</h2>
+      <p>I’m an infosec enthusiast for several years now. On this site, you'll find lots of articles about hacking: CTF write-ups, bug bounty adventures, fun research, and other cyber tinkerings!</p>
+    </div>
+
+    <div class="quote">
+      <p>"Hack, meow, sleep & repeat"</p>
+    </div>
+
+    <hr class="line" />
+
+    <div>
+      <a href="cv.html" class="button">📄 My CV</a>
+      <a href="articles.html" class="button">📚 Articles & Write-ups</a>
+      <a href="https://www.root-me.org/Hacqueen" class="button" target="_blank">🕵️‍♀️ Root-Me</a>
+      <a href="https://www.linkedin.com/in/sidney-falhun-04a363297/" class="button" target="_blank">🔗 LinkedIn</a>
+    </div>
+  </div>
+</body>
+</html>
