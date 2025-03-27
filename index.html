@@ -62,11 +62,25 @@
       border-radius: 12px;
       filter: drop-shadow(0 0 10px #00ffff) drop-shadow(0 0 5px #ff2ecc);
       transition: transform 0.4s ease, filter 0.4s ease;
+      cursor: pointer;
     }
 
     .mascot:hover {
       transform: scale(1.1) rotate(-2deg);
       filter: drop-shadow(0 0 20px #ff2ecc) drop-shadow(0 0 10px #00ffff);
+    }
+
+    .mascot.glitch-effect {
+      animation: glitchImage 0.6s steps(2, end) infinite;
+    }
+
+    @keyframes glitchImage {
+      0% { transform: translate(0) skew(0); }
+      10% { transform: translate(-2px, 2px) skew(1deg, 1deg); }
+      20% { transform: translate(2px, -2px) skew(-1deg, -1deg); }
+      30% { transform: translate(-1px, 1px) skew(0.5deg, 0.5deg); }
+      40% { transform: translate(1px, -1px) skew(-0.5deg, -0.5deg); }
+      50% { transform: translate(0) skew(0); }
     }
 
     .intro {
@@ -155,9 +169,10 @@
         <h1 class="glitch" data-text="Sidney Falhun ✨">Sidney Falhun ✨</h1>
         <p style="font-style: italic; color: #cccccc;">Hacqueen World 🦄</p>
       </div>
-      <img src="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cyber_cat.png" 
-           alt="Cyber Cat Mascot" 
-           class="mascot" />
+      <img src="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cyber_cat.png"
+           alt="Cyber Cat Mascot"
+           class="mascot"
+           id="glitchMascot" />
     </div>
 
     <div class="intro">
@@ -178,5 +193,13 @@
       <a href="https://www.linkedin.com/in/sidney-falhun-04a363297/" class="button" target="_blank">🔗 LinkedIn</a>
     </div>
   </div>
+
+  <script>
+    const mascot = document.getElementById('glitchMascot');
+    mascot.addEventListener('click', () => {
+      mascot.classList.add('glitch-effect');
+      setTimeout(() => mascot.classList.remove('glitch-effect'), 1000);
+    });
+  </script>
 </body>
 </html>
