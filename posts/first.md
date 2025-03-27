@@ -2,6 +2,7 @@
 title: My First CTF
 date: 2025-03-26
 description: A basic write-up of my first CTF 🐾✨
+tags: ["Bug bounty"]
 ---
 
 # Let's hack!
