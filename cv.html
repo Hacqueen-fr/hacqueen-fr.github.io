@@ -12,6 +12,7 @@
       font-family: 'Open Sans', sans-serif;
       background: linear-gradient(160deg, #0a0a0a, #1e1f3a), url('https://www.transparenttextures.com/patterns/graphy.png');
       background-repeat: repeat;
+      background-size: auto;
       color: #EFEFEF;
       font-size: 16px;
       line-height: 1.6;
@@ -151,19 +152,13 @@
 
     @keyframes glitchTop {
       0% { clip: rect(0, 0, 0, 0); transform: translate(0, 0); }
-      20% { clip: rect(2px, 9999px, 5px, 0); transform: translate(-1px, -1px); }
-      40% { clip: rect(6px, 9999px, 9px, 0); transform: translate(1px, 0); }
-      60% { clip: rect(3px, 9999px, 7px, 0); transform: translate(-2px, 1px); }
-      80% { clip: rect(4px, 9999px, 6px, 0); transform: translate(2px, -1px); }
+      50% { clip: rect(0, 9999px, 100%, 0); transform: translate(-2px, -2px); }
       100% { clip: rect(0, 0, 0, 0); transform: translate(0, 0); }
     }
 
     @keyframes glitchBottom {
       0% { clip: rect(0, 0, 0, 0); transform: translate(0, 0); }
-      20% { clip: rect(6px, 9999px, 10px, 0); transform: translate(1px, 1px); }
-      40% { clip: rect(1px, 9999px, 4px, 0); transform: translate(-1px, 0); }
-      60% { clip: rect(5px, 9999px, 8px, 0); transform: translate(2px, -1px); }
-      80% { clip: rect(2px, 9999px, 6px, 0); transform: translate(-2px, 1px); }
+      50% { clip: rect(0, 9999px, 100%, 0); transform: translate(2px, 2px); }
       100% { clip: rect(0, 0, 0, 0); transform: translate(0, 0); }
     }
 
@@ -183,7 +178,6 @@
       color: #00FFFF;
       border-color: #00FFFF;
     }
-
   </style>
 </head>
 <body>
@@ -197,7 +191,7 @@
 
     <!-- Header -->
     <div class="header">
-      <div style="display: flex; flex-direction: column;">
+      <div>
         <h1 class="glow">Sidney Falhun</h1>
         <span style="font-style: italic; color: #ccc;">Just Hacqueen</span>
       </div>
@@ -209,7 +203,8 @@
       <div class="info-item">📍 Cybersecurity Consultant — Rennes / Remote</div>
       <div class="info-item">📧 sysdnety@gmail.com</div>
       <div class="info-item">📞 ask me</div>
-      <div class="info-item">💻 
+      <div class="info-item">
+        💻 
         <a href="https://www.linkedin.com/in/sidney-falhun-04a363297/" target="_blank">LinkedIn</a> • 
         <a href="https://www.root-me.org/Hacqueen" target="_blank">Root-Me</a>
       </div>
@@ -217,12 +212,59 @@
 
     <hr class="line"/>
 
-    <!-- Sections (à compléter si besoin) -->
+    <!-- Sections -->
     <div class="section">
       <h2>🌟 Profile</h2>
-      <p>Cybersecurity enthusiast since 2011 with 6 years of experience in software development and over a year in both offensive and defensive security.</p>
+      <p>Cybersecurity enthusiast since 2011 with 6 years of experience in software development and over a year in both offensive and defensive security. Skilled in vulnerability analysis, Python automation, SIEM tools (Sentinel), forensic and OSINT investigations. Active community member, co-founder of OSINT-FR, conference speaker, and former organizer of Sigsegv. Passionate about joining innovative and collaborative tech teams.</p>
     </div>
 
+    <div class="section">
+      <h2>🔨 Technical Skills</h2>
+      <div class="skills">
+        <div class="skill"><strong>Languages</strong>: Python, PowerShell, C#, JavaScript, Bash, PHP, C, C++</div>
+        <div class="skill"><strong>Security</strong>: Microsoft Sentinel, WithSecure, DependencyCheck, O365 Security & Compliance</div>
+        <div class="skill"><strong>CTI / OSINT</strong>: PowerBi, investigation techniques</div>
+        <div class="skill"><strong>Dev</strong>: SharePoint, PowerApps, Flow, AngularJS, Android, Web backend, Git</div>
+        <div class="skill"><strong>Tools</strong>: VS Code, Burp Suite, Nessus, Nmap</div>
+        <div class="skill"><strong>Forensic</strong>: Autopsy, Volatility, Memory & Disk analysis, Wireshark</div>
+        <div class="skill"><strong>RE & Mobile</strong>: Ghidra, Jadx, Frida</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>💼 Professional Experience</h2>
+      <h3>📅 CGI France — Cybersecurity Consultant <small>(June 2023 – Dec 2024)</small></h3>
+      <ul>
+        <li>Static code analysis (Java, C#)</li>
+        <li>SIEM Management (Microsoft Sentinel)</li>
+        <li>Security Awareness / GDPR / PAS review</li>
+      </ul>
+      <h3>📅 SharePoint / O365 Developer <small>(Oct 2017 – Jun 2023)</small></h3>
+      <ul><li>PowerApps, AngularJS, SharePoint 2013</li></ul>
+      <h3>📅 Android Developer <small>(Apr 2017 – Oct 2017)</small></h3>
+      <ul><li>Expense app with OCR (Kofax)</li></ul>
+    </div>
+
+    <div class="section">
+      <h2>🎤 Community & CTF</h2>
+      <ul>
+        <li>📢 Speaker @ LeHack 2019 — OSINT & PowerBI</li>
+        <li>🧠 Co-founder OSINT-FR</li>
+        <li>🛠️ Staff @ Sigsegv</li>
+        <li>⚡ CTF Player — LeHack, BreizhCTF, Root-Me</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🎓 Education</h2>
+      <p><strong>BTS SIO</strong> — Services Informatiques aux Organisations (2014)</p>
+    </div>
+
+    <div class="section">
+      <h2>🌍 Languages & Interests</h2>
+      <p><strong>Languages:</strong> French (native), English (proficient)</p>
+      <p><strong>Interests:</strong> CTFs, OSINT, Cyberculture, Swimming</p>
+    </div>
   </div>
 </body>
 </html>
