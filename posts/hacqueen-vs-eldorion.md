@@ -1,6 +1,5 @@
 ---
 title: hacqueen-vs-eldorion
-image: https://yourhostedimage.url/path/to/eldorion_visual.png
 date: 2025-03-26
 description: A glitter-fueled showdown between Hacqueen and a self-healing smart contract beast. Spoiler: the unicorn doesn’t miss.
 tags: ["Blockchain", "Smart Contract", "CTF", "HTB"]
@@ -8,11 +7,11 @@ tags: ["Blockchain", "Smart Contract", "CTF", "HTB"]
 
 # 🌈✨ Hacqueen vs Eldorion: Bytes, Bravery & a Battle Unicorn ✨🌈
 
-![Hacqueen vs Eldorion](https://yourhostedimage.url/path/to/eldorion_visual.png)
+![Hacqueen vs Eldorion](https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/refs/heads/main/assets/hacqueenvsdrakepng)
 
 This HTB challenge was pure drama: a pixel-perfect realm, an overpowered regenerating beast, and one fabulous hacker armed with Web3, glitter, and Python.
 
-> *Welcome to the realms of Eldoria, adventurer. You’ve found yourself trapped in this mysterious digital domain, and the only way to escape is by overcoming the trials laid before you. But your journey has barely begun, and already an overwhelming obstacle stands in your path. Before you can even reach the nearest city, seeking allies and information, you must face Eldorion, a colossal beast with terrifying regenerative powers. This creature, known for its "eternal resilience" guards the only passage fo...
+> *Welcome to the realms of Eldoria, adventurer. You’ve found yourself trapped in this mysterious digital domain, and the only way to escape is by overcoming the trials laid before you. But your journey has barely begun, and already an overwhelming obstacle stands in your path. Before you can even reach the nearest city, seeking allies and information, you must face Eldorion, a colossal beast with terrifying regenerative powers. This creature, known for its "eternal resilience" guards the only passage forw...
 
 🎯 **Goal**: Defeat Eldorion — a smart contract boss that heals every time a new block is mined.
 
