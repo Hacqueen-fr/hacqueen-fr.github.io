@@ -14,19 +14,35 @@
       margin: 0;
       padding: 40px;
       font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(160deg, #0a0a0a, #1e1f3a);
       color: #efefef;
+      background: linear-gradient(160deg, #0a0a0a, #1e1f3a);
+      background-image: url('https://www.transparenttextures.com/patterns/graphy.png');
+      background-size: auto;
+      background-repeat: repeat;
+      animation: scrollBg 60s linear infinite;
     }
+
+    @keyframes scrollBg {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 0 1000px;
+      }
+    }
+
     h1 {
       text-align: center;
       color: #A0E8FF;
     }
+
     .line {
       height: 2px;
       background: linear-gradient(to right, #00FFFF, #A020F0);
       border: none;
       margin: 20px 0;
     }
+
     .home-button {
       display: inline-block;
       margin-bottom: 30px;
@@ -44,11 +60,13 @@
       color: #FF2ECC;
       transform: scale(1.05) rotate(-1deg);
     }
+
     .container {
       max-width: 100%;
       margin: auto;
       position: relative;
     }
+
     .search-bar {
       margin: 20px auto;
       display: flex;
@@ -56,6 +74,7 @@
       flex-wrap: wrap;
       justify-content: center;
     }
+
     .search-bar input, .search-bar select {
       padding: 10px;
       border: 1px solid #00FFFF;
@@ -63,11 +82,13 @@
       border-radius: 5px;
       color: #00FFFF;
     }
+
     .carousel-wrapper {
       position: relative;
       overflow: visible;
       padding-inline: 40px;
     }
+
     .carousel {
       display: flex;
       overflow-x: auto;
@@ -76,6 +97,7 @@
       padding-bottom: 20px;
       scroll-behavior: smooth;
     }
+
     .article-card {
       flex: 0 0 300px;
       display: flex;
@@ -89,18 +111,23 @@
       scroll-snap-align: start;
       box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
     }
+
     .article-card h2 {
       color: #FF2ECC;
     }
+
     .card-body {
       flex-grow: 1;
     }
+
     .card-footer {
       margin-top: 15px;
     }
+
     .tags {
       margin: 6px 0 10px;
     }
+
     .tag {
       display: inline-block;
       margin: 3px;
@@ -111,6 +138,7 @@
       font-size: 0.8em;
       color: #FF2ECC;
     }
+
     .button {
       display: inline-block;
       margin: 6px 6px 0 0;
@@ -122,10 +150,12 @@
       cursor: pointer;
       font-size: 0.8em;
     }
+
     .button:hover {
       background: rgba(255, 46, 204, 0.2);
       color: #FF2ECC;
     }
+
     .carousel-arrow {
       position: absolute;
       top: 50%;
@@ -139,6 +169,7 @@
       cursor: pointer;
       z-index: 2;
     }
+
     .arrow-left { left: -20px; }
     .arrow-right { right: -20px; }
 
@@ -151,6 +182,7 @@
       max-width: 900px;
       margin-inline: auto;
     }
+
     .mascot {
       position: fixed;
       bottom: 20px;
@@ -161,6 +193,7 @@
       z-index: 10;
       transition: transform 0.3s ease;
     }
+
     .bubble {
       position: fixed;
       bottom: 130px;
@@ -177,11 +210,11 @@
       white-space: normal;
       line-height: 1.3;
     }
+
     .bubble.show {
       opacity: 1;
     }
 
-    /* Back to Top Button */
     #backToTop {
       position: fixed;
       bottom: 20px;
@@ -198,6 +231,7 @@
       text-decoration: none;
       z-index: 99;
     }
+
     #backToTop:hover {
       color: #FF2ECC;
       background-color: rgba(255, 46, 204, 0.2);
