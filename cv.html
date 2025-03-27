@@ -36,21 +36,6 @@
       box-shadow: 0 0 15px rgba(0,255,255,0.1);
     }
 
-    p, li {
-      margin-bottom: 10px;
-    }
-
-    .glow {
-      text-shadow: 0 0 5px #00FFFF;
-    }
-
-    .line {
-      height: 2px;
-      background: linear-gradient(to right, #00FFFF, #A020F0);
-      border: none;
-      margin: 20px 0;
-    }
-
     .info {
       display: flex;
       justify-content: space-between;
@@ -103,6 +88,17 @@
       justify-content: space-between;
       flex-wrap: wrap;
       margin-bottom: 20px;
+    }
+
+    .glow {
+      text-shadow: 0 0 5px #00FFFF;
+    }
+
+    .line {
+      height: 2px;
+      background: linear-gradient(to right, #00FFFF, #A020F0);
+      border: none;
+      margin: 20px 0;
     }
 
     .top-buttons {
@@ -212,9 +208,7 @@
       <div class="info-item">📞 ask me</div>
       <div class="info-item">
         💻 
-        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="16" style="vertical-align: middle; margin-right: 5px;">
         <a href="https://www.linkedin.com/in/sidney-falhun-04a363297/" target="_blank">LinkedIn</a> • 
-        <img src="https://www.root-me.org/squelettes/img/rblack.ico?1448449194" width="16" style="vertical-align: middle; margin-right: 5px;">
         <a href="https://www.root-me.org/Hacqueen" target="_blank">Root-Me</a>
       </div>
     </div>
@@ -224,14 +218,72 @@
     <!-- Sections -->
     <div class="section">
       <h2>🌟 Profile</h2>
-      <p>Cybersecurity enthusiast since 2011 with 6 years of experience in software development and over a year in both offensive and defensive security...</p>
+      <p>Cybersecurity enthusiast since 2011 with 6 years of experience in software development and over a year in both offensive and defensive security. Skilled in vulnerability analysis, Python automation, SIEM tools (Sentinel), forensic and OSINT investigations. Active community member, co-founder of OSINT-FR, conference speaker, and former organizer of Sigsegv. Passionate about joining innovative and collaborative tech teams.</p>
     </div>
 
-    <!-- (Tu peux continuer avec les autres sections ici) -->
+    <div class="section">
+      <h2>🔨 Technical Skills</h2>
+      <div class="skills">
+        <div class="skill"><strong>Languages</strong>: Python, PowerShell, C#, JavaScript, Bash, PHP, C, C++</div>
+        <div class="skill"><strong>Security</strong>: Microsoft Sentinel, WithSecure, DependencyCheck, O365 Security & Compliance</div>
+        <div class="skill"><strong>CTI / OSINT</strong>: PowerBi, investigation techniques</div>
+        <div class="skill"><strong>Dev</strong>: SharePoint, PowerApps, Flow, AngularJS, Android, Web backend, Git</div>
+        <div class="skill"><strong>Tools</strong>: VS Code, Burp Suite, Nessus, Nmap</div>
+        <div class="skill"><strong>Forensic</strong>: Autopsy, Volatility, Memory & Disk analysis, Wireshark</div>
+        <div class="skill"><strong>RE & Mobile</strong>: Ghidra, Jadx, Frida</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>💼 Professional Experience</h2>
+      <h3>📅 CGI France — Cybersecurity Consultant <small>(June 2023 – December 2024)</small></h3>
+      <ul>
+        <li>Static code analysis (Java, C#)</li>
+        <li>Vulnerability tracking (WithSecure, DependencyCheck)</li>
+        <li>Automation with Python</li>
+        <li>SIEM Management (Microsoft Sentinel)</li>
+        <li>Security recommendations</li>
+        <li>O365 classification / GDPR awareness</li>
+        <li>PAS documentation review</li>
+      </ul>
+
+      <h3>📅 CGI France — SharePoint / O365 Developer <small>(Oct 2017 – June 2023)</small></h3>
+      <ul>
+        <li>PowerApps, Flow, AngularJS, SharePoint 2013</li>
+        <li>PowerShell automation</li>
+      </ul>
+
+      <h3>📅 CGI France — Android Developer <small>(Apr 2017 – Oct 2017)</small></h3>
+      <ul>
+        <li>Expense app with OCR (Kofax)</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🎤 Community & CTF</h2>
+      <ul>
+        <li>📢 Speaker @ LeHack 2019 — OSINT & PowerBI</li>
+        <li>🧠 Co-founder OSINT-FR</li>
+        <li>🛠️ Staff @ Sigsegv</li>
+        <li>⚡ CTF Player — LeHack, BreizhCTF, Root-Me</li>
+        <li>🗓️ Internal demos @ CGI</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🎓 Education</h2>
+      <p><strong>BTS SIO</strong> — Services Informatiques aux Organisations (2014)</p>
+    </div>
+
+    <div class="section">
+      <h2>🌍 Languages & Interests</h2>
+      <p><strong>Languages:</strong> French (native), English (proficient)</p>
+      <p><strong>Interests:</strong> Swimming, Fitness, CTFs, OSINT, tech culture</p>
+    </div>
 
   </div>
 
-  <!-- Glitch Redirection Script -->
+  <!-- Glitch Redirect -->
   <script>
     function glitchRedirect() {
       const btn = document.querySelector('.glitch-animate');
