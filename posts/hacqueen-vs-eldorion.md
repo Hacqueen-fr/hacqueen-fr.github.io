@@ -1,7 +1,8 @@
 ---
 title: hacqueen-vs-eldorion
+image: /mnt/data/A_vibrant_digital_illustration_with_elements_of_fa.png
 date: 2025-03-26
-description: A glitter-fueled showdown between Hacqueen and a self-healing smart contract beast. Spoiler: the unicorn never miss.
+description: A glitter-fueled showdown between Hacqueen and a self-healing smart contract beast. Spoiler: the unicorn doesn’t miss.
 tags: ["Blockchain", "Smart Contract", "CTF", "HTB"]
 ---
 
