@@ -108,45 +108,46 @@
       margin-bottom: 30px;
     }
 
-    .home-button {
-      text-decoration: none;
-      font-weight: bold;
-      padding: 10px 20px;
-      border-radius: 5px;
+    .glitch-button {
       font-family: 'Orbitron', sans-serif;
-      color: #00FFFF;
-      border: 1px solid #00FFFF;
-      background-color: rgba(0, 255, 255, 0.1);
-      transition: all 0.3s ease;
       position: relative;
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: rgba(0,255,255,0.1);
+      border: 2px solid #00FFFF;
+      color: #00FFFF;
+      text-decoration: none;
       overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
 
-    .home-button:hover {
+    .glitch-button:hover {
+      background-color: rgba(255,46,204,0.1);
       color: #FF2ECC;
       border-color: #FF2ECC;
-      background-color: rgba(255, 46, 204, 0.1);
     }
 
-    .glitch-animate::before,
-    .glitch-animate::after {
+    .glitch-button::before,
+    .glitch-button::after {
       content: attr(data-text);
       position: absolute;
       left: 0;
       width: 100%;
+      height: 100%;
+      overflow: hidden;
       color: #FF2ECC;
       background: transparent;
-      overflow: hidden;
       clip: rect(0, 0, 0, 0);
     }
 
-    .glitch-animate::before {
-      animation: glitchTop 0.3s ease-in-out;
+    .glitch-button::before {
+      animation: glitchTop 0.3s linear infinite;
     }
 
-    .glitch-animate::after {
-      animation: glitchBottom 0.3s ease-in-out;
+    .glitch-button::after {
       color: #00FFFF;
+      animation: glitchBottom 0.3s linear infinite;
     }
 
     @keyframes glitchTop {
@@ -161,26 +162,26 @@
       100% { clip: rect(0, 9999px, 0, 0); transform: translate(0, 0); }
     }
 
-    .download-icon {
-      display: inline-block;
-      text-decoration: none;
-      font-size: 20px;
-      padding: 12px 16px;
+    .download-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      font-family: 'Orbitron', sans-serif;
       background: rgba(255, 46, 204, 0.1);
-      color: #FF2ECC;
       border: 2px solid #FF2ECC;
-      border-radius: 50%;
-      box-shadow: 0 0 12px #FF2ECC55;
+      color: #FF2ECC;
+      text-decoration: none;
+      border-radius: 6px;
       transition: all 0.3s ease;
     }
 
-    .download-icon:hover {
+    .download-button:hover {
       color: #00FFFF;
       border-color: #00FFFF;
-      background: rgba(0, 255, 255, 0.1);
-      transform: scale(1.1) rotate(-6deg);
-      box-shadow: 0 0 15px #00FFFFAA;
+      background-color: rgba(0, 255, 255, 0.1);
     }
+
   </style>
 </head>
 <body>
@@ -188,8 +189,10 @@
 
     <!-- Top Buttons -->
     <div class="top-buttons">
-      <a href="#" class="home-button glitch-animate" data-text="← Back to Home" onclick="glitchRedirect()">← Back to Home</a>
-      <a href="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cv_sidney.pdf" class="download-icon" title="Download PDF" target="_blank">⬇️</a>
+      <a href="index.html" class="glitch-button" data-text="← Back to Home">← Back to Home</a>
+      <a href="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cv_sidney.pdf" class="download-button" target="_blank">
+        ⬇️ Download CV (PDF)
+      </a>
     </div>
 
     <!-- Header -->
@@ -218,7 +221,7 @@
     <!-- Sections -->
     <div class="section">
       <h2>🌟 Profile</h2>
-      <p>Cybersecurity enthusiast since 2011 with 6 years of experience in software development and over a year in both offensive and defensive security. Skilled in vulnerability analysis, Python automation, SIEM tools (Sentinel), forensic and OSINT investigations. Active community member, co-founder of OSINT-FR, conference speaker, and former organizer of Sigsegv. Passionate about joining innovative and collaborative tech teams.</p>
+      <p>Cybersecurity enthusiast since 2011 with 6 years of experience in software development and over a year in both offensive and defensive security...</p>
     </div>
 
     <div class="section">
@@ -236,27 +239,16 @@
 
     <div class="section">
       <h2>💼 Professional Experience</h2>
-      <h3>📅 CGI France — Cybersecurity Consultant <small>(June 2023 – December 2024)</small></h3>
+      <h3>📅 CGI France — Cybersecurity Consultant <small>(June 2023 – Dec 2024)</small></h3>
       <ul>
         <li>Static code analysis (Java, C#)</li>
-        <li>Vulnerability tracking (WithSecure, DependencyCheck)</li>
-        <li>Automation with Python</li>
         <li>SIEM Management (Microsoft Sentinel)</li>
-        <li>Security recommendations</li>
-        <li>O365 classification / GDPR awareness</li>
-        <li>PAS documentation review</li>
+        <li>Security Awareness / GDPR / PAS review</li>
       </ul>
-
-      <h3>📅 CGI France — SharePoint / O365 Developer <small>(Oct 2017 – June 2023)</small></h3>
-      <ul>
-        <li>PowerApps, Flow, AngularJS, SharePoint 2013</li>
-        <li>PowerShell automation</li>
-      </ul>
-
-      <h3>📅 CGI France — Android Developer <small>(Apr 2017 – Oct 2017)</small></h3>
-      <ul>
-        <li>Expense app with OCR (Kofax)</li>
-      </ul>
+      <h3>📅 SharePoint / O365 Developer <small>(Oct 2017 – Jun 2023)</small></h3>
+      <ul><li>PowerApps, AngularJS, SharePoint 2013</li></ul>
+      <h3>📅 Android Developer <small>(Apr 2017 – Oct 2017)</small></h3>
+      <ul><li>Expense app with OCR (Kofax)</li></ul>
     </div>
 
     <div class="section">
@@ -266,7 +258,6 @@
         <li>🧠 Co-founder OSINT-FR</li>
         <li>🛠️ Staff @ Sigsegv</li>
         <li>⚡ CTF Player — LeHack, BreizhCTF, Root-Me</li>
-        <li>🗓️ Internal demos @ CGI</li>
       </ul>
     </div>
 
@@ -278,20 +269,8 @@
     <div class="section">
       <h2>🌍 Languages & Interests</h2>
       <p><strong>Languages:</strong> French (native), English (proficient)</p>
-      <p><strong>Interests:</strong> Swimming, Fitness, CTFs, OSINT, tech culture</p>
+      <p><strong>Interests:</strong> CTFs, OSINT, Cyberculture, Swimming</p>
     </div>
-
   </div>
-
-  <!-- Glitch Redirect -->
-  <script>
-    function glitchRedirect() {
-      const btn = document.querySelector('.glitch-animate');
-      btn.classList.add('glitch-animate');
-      setTimeout(() => {
-        window.location.href = 'index.html';
-      }, 400);
-    }
-  </script>
 </body>
 </html>
