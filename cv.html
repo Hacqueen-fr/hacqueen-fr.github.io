@@ -22,7 +22,6 @@
       font-family: 'Orbitron', sans-serif;
       font-weight: 600;
       text-transform: uppercase;
-      background: none;
       color: #A0E8FF;
       padding-left: 10px;
     }
@@ -39,10 +38,6 @@
 
     p, li {
       margin-bottom: 10px;
-    }
-
-    .highlight {
-      color: #FF2ECC;
     }
 
     .glow {
@@ -88,7 +83,7 @@
     }
 
     .photo {
-      border-radius: 50%;
+      border-radius: 12px;
       width: 140px;
       height: 140px;
       object-fit: cover;
@@ -110,52 +105,6 @@
       margin-bottom: 20px;
     }
 
-    .section.hacker-style::before {
-      content: '🕶️';
-    }
-
-    .section.hacker-style {
-      border-left-color: #FF2ECC;
-      background: linear-gradient(145deg, rgba(255,255,255,0.02), rgba(255,46,204,0.05));
-    }
-
-    .info-item a:hover {
-      text-decoration: underline;
-      color: #FF2ECC;
-    }
-
-    .terminal-effect {
-      animation: blink 1.2s step-start infinite;
-    }
-
-    @keyframes blink {
-      50% { opacity: 0.7; }
-      100% { opacity: 1; }
-    }
-
-    .ascii-banner {
-      font-family: monospace;
-      font-size: 12px;
-      color: #00ffff;
-      text-align: center;
-      margin-bottom: 30px;
-      white-space: pre;
-      line-height: 1.2;
-    }
-
-    .quote {
-      text-align: center;
-      font-style: italic;
-      color: #A0E8FF;
-      margin-bottom: 40px;
-    }
-
-    .section-icon-Compétences::before { content: '🧰'; }
-    .section-icon-Expériences::before { content: '💼'; }
-    .section-icon-Communauté::before { content: '🌐'; }
-    .section-icon-Formation::before { content: '🎓'; }
-    .section-icon-Langues::before { content: '🌍'; }
-
     .top-buttons {
       display: flex;
       justify-content: space-between;
@@ -163,18 +112,16 @@
       margin-bottom: 30px;
     }
 
-    .top-buttons a {
+    .home-button {
       text-decoration: none;
       font-weight: bold;
       padding: 10px 20px;
       border-radius: 5px;
-      transition: all 0.3s ease;
-    }
-
-    .home-button {
+      font-family: 'Orbitron', sans-serif;
       color: #00FFFF;
       border: 1px solid #00FFFF;
       background-color: rgba(0, 255, 255, 0.1);
+      transition: all 0.3s ease;
     }
 
     .home-button:hover {
@@ -183,42 +130,50 @@
       background-color: rgba(255, 46, 204, 0.1);
     }
 
-    .download-button {
+    .download-icon {
+      display: inline-block;
+      text-decoration: none;
+      font-size: 20px;
+      padding: 12px 16px;
+      background: rgba(255, 46, 204, 0.1);
       color: #FF2ECC;
-      border: 1px solid #FF2ECC;
-      background-color: rgba(255, 46, 204, 0.1);
+      border: 2px solid #FF2ECC;
+      border-radius: 50%;
+      box-shadow: 0 0 12px #FF2ECC55;
+      transition: all 0.3s ease;
     }
 
-    .download-button:hover {
+    .download-icon:hover {
       color: #00FFFF;
       border-color: #00FFFF;
-      background-color: rgba(0, 255, 255, 0.1);
+      background: rgba(0, 255, 255, 0.1);
+      transform: scale(1.1) rotate(-6deg);
+      box-shadow: 0 0 15px #00FFFFAA;
     }
   </style>
 </head>
 <body>
   <div style="max-width: 1000px; margin: 0 auto;">
-    <!-- Top Buttons -->
+    
     <div class="top-buttons">
       <a href="index.html" class="home-button">← Back to Home</a>
-      <a href="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cv_sidney.pdf" class="download-button" target="_blank">📄 Download PDF Resume</a>
+      <a href="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cv_sidney.pdf" class="download-icon" title="Download PDF" target="_blank">⬇️</a>
     </div>
 
-    <!-- Header -->
     <div class="header">
       <div style="display: flex; flex-direction: column;">
         <h1 class="glow" style="margin: 0;">Sidney Falhun</h1>
-        <span style="font-size: 0.95em; color: #cccccc; font-style: italic; font-family: 'Orbitron', sans-serif; margin-top: 4px;">Just Hacqueen</span>
+        <span style="font-size: 0.95em; color: #cccccc; font-style: italic;">Just Hacqueen</span>
       </div>
       <img src="https://avatars.githubusercontent.com/u/114197273?v=4" alt="Photo of Sidney Falhun" class="photo" />
     </div>
 
-    <!-- Info -->
     <div class="info">
       <div class="info-item">📍 Cybersecurity Consultant — Rennes / Remote</div>
       <div class="info-item">📧 sysdnety@gmail.com</div>
       <div class="info-item">📞 ask me</div>
-      <div class="info-item">💻 
+      <div class="info-item">
+        💻 
         <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="16" style="vertical-align: middle; margin-right: 5px;">
         <a href="https://www.linkedin.com/in/sidney-falhun-04a363297/" target="_blank">LinkedIn</a> • 
         <img src="https://www.root-me.org/squelettes/img/rblack.ico?1448449194" width="16" style="vertical-align: middle; margin-right: 5px;">
@@ -228,7 +183,6 @@
 
     <hr class="line" />
 
-    <!-- Sections -->
     <div class="section">
       <h2>🌟 Profile</h2>
       <p>Cybersecurity enthusiast since 2011 with 6 years of experience in software development and over a year in both offensive and defensive security. Skilled in vulnerability analysis, Python automation, SIEM tools (Sentinel), forensic and OSINT investigations. Active community member, co-founder of OSINT-FR, conference speaker, and former organizer of Sigsegv. Passionate about joining innovative and collaborative tech teams.</p>
