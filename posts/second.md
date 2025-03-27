@@ -1,10 +1,10 @@
 ---
-title: "Titre de l'Article"
+title: article title
 date: "2025-03-26"
-description: "Brève description de l'article."
-tags: ["CTF", "Bug Bounty", "Recherche"]
+description: plop
+tags: ["CTF"]
 ---
 
 ## Introduction
 
-Contenu de l'article ici.
+coco
