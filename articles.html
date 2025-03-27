@@ -7,6 +7,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
     body {
       margin: 0;
       padding: 40px;
@@ -138,6 +141,7 @@
     }
     .arrow-left { left: -20px; }
     .arrow-right { right: -20px; }
+
     #reader {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid #00ffff30;
@@ -176,6 +180,29 @@
     .bubble.show {
       opacity: 1;
     }
+
+    /* Back to Top Button */
+    #backToTop {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      font-size: 22px;
+      padding: 10px 16px;
+      background: rgba(0,255,255,0.1);
+      border: 2px solid #00FFFF;
+      border-radius: 8px;
+      color: #00FFFF;
+      font-family: 'Orbitron', sans-serif;
+      box-shadow: 0 0 10px #00ffff50;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      z-index: 99;
+    }
+    #backToTop:hover {
+      color: #FF2ECC;
+      background-color: rgba(255, 46, 204, 0.2);
+      transform: scale(1.1) rotate(-2deg);
+    }
   </style>
 </head>
 <body>
@@ -199,6 +226,7 @@
 
   <img src="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cyber_cat.png" class="mascot" id="mascot" />
   <div class="bubble" id="bubble">Meow</div>
+  <a href="#" id="backToTop" title="Back to top">↑</a>
 
   <script>
     const posts = ['first.md', 'second.md', 'third.md'];
