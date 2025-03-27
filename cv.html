@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sidney Falhun - Resume</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Open+Sans&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Open+Sans&display=swap" rel="stylesheet"/>
   <style>
     body {
       margin: 0;
@@ -12,7 +12,6 @@
       font-family: 'Open Sans', sans-serif;
       background: linear-gradient(160deg, #0a0a0a, #1e1f3a), url('https://www.transparenttextures.com/patterns/graphy.png');
       background-repeat: repeat;
-      background-size: auto;
       color: #EFEFEF;
       font-size: 16px;
       line-height: 1.6;
@@ -20,51 +19,16 @@
 
     h1, h2, h3 {
       font-family: 'Orbitron', sans-serif;
-      font-weight: 600;
-      text-transform: uppercase;
       color: #A0E8FF;
-      padding-left: 10px;
+      text-transform: uppercase;
     }
 
-    .section {
-      margin-bottom: 40px;
-      border-left: 2px solid rgba(0, 255, 255, 0.4);
-      padding-left: 20px;
-      background: linear-gradient(145deg, rgba(255,255,255,0.02), rgba(0,255,255,0.03));
-      border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 0 15px rgba(0,255,255,0.1);
-    }
-
-    .info {
+    .header {
       display: flex;
       justify-content: space-between;
-      flex-wrap: wrap;
+      align-items: center;
       margin-bottom: 20px;
-    }
-
-    .info-item {
-      margin: 5px 0;
-    }
-
-    .skills {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 10px;
-    }
-
-    .skill {
-      background-color: rgba(0, 255, 255, 0.1);
-      border: 1px solid #00FFFF;
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-size: 1em;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-
-    .skill:hover {
-      background-color: rgba(255, 46, 204, 0.2);
-      transform: scale(1.05);
+      flex-wrap: wrap;
     }
 
     .photo {
@@ -74,24 +38,41 @@
       object-fit: cover;
       border: 3px solid #00FFFF;
       box-shadow: 0 0 15px #00FFFFAA;
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      transition: transform 0.3s ease;
     }
 
     .photo:hover {
-      box-shadow: 0 0 30px #FF2ECCAA;
       transform: scale(1.05);
+      box-shadow: 0 0 30px #FF2ECCAA;
     }
 
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
+    .section {
+      margin-bottom: 40px;
+      border-left: 2px solid rgba(0,255,255,0.3);
+      padding-left: 20px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.02), rgba(0,255,255,0.03));
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0,255,255,0.1);
     }
 
-    .glow {
-      text-shadow: 0 0 5px #00FFFF;
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .skill {
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid #00FFFF;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .skill:hover {
+      background: rgba(255, 46, 204, 0.2);
+      transform: scale(1.05);
     }
 
     .line {
@@ -101,6 +82,22 @@
       margin: 20px 0;
     }
 
+    .info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .info-item {
+      margin: 5px 0;
+    }
+
+    .glow {
+      text-shadow: 0 0 5px #00FFFF;
+    }
+
+    /* Buttons Section */
     .top-buttons {
       display: flex;
       justify-content: space-between;
@@ -109,16 +106,15 @@
     }
 
     .glitch-button {
-      font-family: 'Orbitron', sans-serif;
       position: relative;
-      display: inline-block;
       padding: 10px 20px;
+      font-family: 'Orbitron', sans-serif;
       background-color: rgba(0,255,255,0.1);
       border: 2px solid #00FFFF;
       color: #00FFFF;
+      border-radius: 6px;
       text-decoration: none;
       overflow: hidden;
-      cursor: pointer;
       transition: all 0.3s ease;
     }
 
@@ -136,18 +132,18 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      color: #FF2ECC;
       background: transparent;
       clip: rect(0, 0, 0, 0);
     }
 
     .glitch-button::before {
       animation: glitchTop 0.3s linear infinite;
+      color: #FF2ECC;
     }
 
     .glitch-button::after {
-      color: #00FFFF;
       animation: glitchBottom 0.3s linear infinite;
+      color: #00FFFF;
     }
 
     @keyframes glitchTop {
@@ -163,23 +159,20 @@
     }
 
     .download-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 16px;
       font-family: 'Orbitron', sans-serif;
-      background: rgba(255, 46, 204, 0.1);
+      padding: 10px 16px;
+      background-color: rgba(255, 46, 204, 0.1);
       border: 2px solid #FF2ECC;
       color: #FF2ECC;
-      text-decoration: none;
       border-radius: 6px;
+      text-decoration: none;
       transition: all 0.3s ease;
     }
 
     .download-button:hover {
+      background-color: rgba(0,255,255,0.1);
       color: #00FFFF;
       border-color: #00FFFF;
-      background-color: rgba(0, 255, 255, 0.1);
     }
 
   </style>
@@ -190,18 +183,16 @@
     <!-- Top Buttons -->
     <div class="top-buttons">
       <a href="index.html" class="glitch-button" data-text="← Back to Home">← Back to Home</a>
-      <a href="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cv_sidney.pdf" class="download-button" target="_blank">
-        ⬇️ Download CV (PDF)
-      </a>
+      <a href="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cv_sidney.pdf" target="_blank" class="download-button">⬇️ Download PDF</a>
     </div>
 
     <!-- Header -->
     <div class="header">
       <div style="display: flex; flex-direction: column;">
-        <h1 class="glow" style="margin: 0;">Sidney Falhun</h1>
-        <span style="font-size: 0.95em; color: #cccccc; font-style: italic;">Just Hacqueen</span>
+        <h1 class="glow">Sidney Falhun</h1>
+        <span style="font-style: italic; color: #ccc;">Just Hacqueen</span>
       </div>
-      <img src="https://avatars.githubusercontent.com/u/114197273?v=4" alt="Photo of Sidney Falhun" class="photo" />
+      <img src="https://avatars.githubusercontent.com/u/114197273?v=4" alt="Photo" class="photo" />
     </div>
 
     <!-- Info -->
@@ -209,68 +200,64 @@
       <div class="info-item">📍 Cybersecurity Consultant — Rennes / Remote</div>
       <div class="info-item">📧 sysdnety@gmail.com</div>
       <div class="info-item">📞 ask me</div>
-      <div class="info-item">
-        💻 
+      <div class="info-item">💻 
         <a href="https://www.linkedin.com/in/sidney-falhun-04a363297/" target="_blank">LinkedIn</a> • 
         <a href="https://www.root-me.org/Hacqueen" target="_blank">Root-Me</a>
       </div>
     </div>
 
-    <hr class="line" />
+    <hr class="line"/>
 
     <!-- Sections -->
     <div class="section">
       <h2>🌟 Profile</h2>
-      <p>Cybersecurity enthusiast since 2011 with 6 years of experience in software development and over a year in both offensive and defensive security...</p>
+      <p>Cybersecurity enthusiast since 2011 with 6 years of experience in software development and over a year in both offensive and defensive security.</p>
     </div>
 
     <div class="section">
       <h2>🔨 Technical Skills</h2>
       <div class="skills">
         <div class="skill"><strong>Languages</strong>: Python, PowerShell, C#, JavaScript, Bash, PHP, C, C++</div>
-        <div class="skill"><strong>Security</strong>: Microsoft Sentinel, WithSecure, DependencyCheck, O365 Security & Compliance</div>
+        <div class="skill"><strong>Security</strong>: Sentinel, WithSecure, DependencyCheck, O365 Security</div>
         <div class="skill"><strong>CTI / OSINT</strong>: PowerBi, investigation techniques</div>
-        <div class="skill"><strong>Dev</strong>: SharePoint, PowerApps, Flow, AngularJS, Android, Web backend, Git</div>
+        <div class="skill"><strong>Dev</strong>: SharePoint, PowerApps, Flow, AngularJS, Android, Git</div>
         <div class="skill"><strong>Tools</strong>: VS Code, Burp Suite, Nessus, Nmap</div>
-        <div class="skill"><strong>Forensic</strong>: Autopsy, Volatility, Memory & Disk analysis, Wireshark</div>
+        <div class="skill"><strong>Forensic</strong>: Autopsy, Volatility, Wireshark</div>
         <div class="skill"><strong>RE & Mobile</strong>: Ghidra, Jadx, Frida</div>
       </div>
     </div>
 
     <div class="section">
       <h2>💼 Professional Experience</h2>
-      <h3>📅 CGI France — Cybersecurity Consultant <small>(June 2023 – Dec 2024)</small></h3>
+      <h3>📅 CGI France — Cybersecurity Consultant <small>(2023 – 2024)</small></h3>
       <ul>
-        <li>Static code analysis (Java, C#)</li>
-        <li>SIEM Management (Microsoft Sentinel)</li>
-        <li>Security Awareness / GDPR / PAS review</li>
+        <li>Static code analysis, SIEM, PAS review</li>
+        <li>Security awareness, GDPR</li>
       </ul>
-      <h3>📅 SharePoint / O365 Developer <small>(Oct 2017 – Jun 2023)</small></h3>
-      <ul><li>PowerApps, AngularJS, SharePoint 2013</li></ul>
-      <h3>📅 Android Developer <small>(Apr 2017 – Oct 2017)</small></h3>
-      <ul><li>Expense app with OCR (Kofax)</li></ul>
+      <h3>📅 SharePoint Developer <small>(2017 – 2023)</small></h3>
+      <ul><li>PowerApps, AngularJS, PowerShell</li></ul>
     </div>
 
     <div class="section">
       <h2>🎤 Community & CTF</h2>
       <ul>
-        <li>📢 Speaker @ LeHack 2019 — OSINT & PowerBI</li>
+        <li>📢 Speaker @ LeHack</li>
         <li>🧠 Co-founder OSINT-FR</li>
-        <li>🛠️ Staff @ Sigsegv</li>
-        <li>⚡ CTF Player — LeHack, BreizhCTF, Root-Me</li>
+        <li>⚡ CTF Player @ Root-Me, BreizhCTF</li>
       </ul>
     </div>
 
     <div class="section">
       <h2>🎓 Education</h2>
-      <p><strong>BTS SIO</strong> — Services Informatiques aux Organisations (2014)</p>
+      <p><strong>BTS SIO</strong> — 2014</p>
     </div>
 
     <div class="section">
       <h2>🌍 Languages & Interests</h2>
-      <p><strong>Languages:</strong> French (native), English (proficient)</p>
-      <p><strong>Interests:</strong> CTFs, OSINT, Cyberculture, Swimming</p>
+      <p>🇫🇷 French (native), 🇬🇧 English (proficient)</p>
+      <p>🎮 CTFs, Cyberculture, OSINT, Fitness</p>
     </div>
+
   </div>
 </body>
 </html>
