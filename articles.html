@@ -18,6 +18,12 @@
       text-align: center;
       color: #A0E8FF;
     }
+    .line {
+      height: 2px;
+      background: linear-gradient(to right, #00FFFF, #A020F0);
+      border: none;
+      margin: 20px 0;
+    }
     .home-button {
       display: inline-block;
       margin-bottom: 30px;
@@ -170,27 +176,6 @@
     .bubble.show {
       opacity: 1;
     }
-    #backToTop {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      text-decoration: none;
-      font-size: 24px;
-      padding: 10px 15px;
-      background: rgba(0,255,255,0.1);
-      border: 2px solid #00ffff;
-      border-radius: 8px;
-      color: #00ffff;
-      font-family: 'Orbitron', sans-serif;
-      box-shadow: 0 0 10px #00ffff50;
-      transition: all 0.3s ease;
-      z-index: 99;
-    }
-    #backToTop:hover {
-      color: #FF2ECC;
-      background-color: rgba(255, 46, 204, 0.2);
-      transform: scale(1.1) rotate(-2deg);
-    }
   </style>
 </head>
 <body>
@@ -214,7 +199,6 @@
 
   <img src="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cyber_cat.png" class="mascot" id="mascot" />
   <div class="bubble" id="bubble">Meow</div>
-  <a href="#" id="backToTop" title="Back to top">↑</a>
 
   <script>
     const posts = ['first.md', 'second.md', 'third.md'];
@@ -296,11 +280,9 @@
       });
 
       const arrows = document.querySelectorAll('.carousel-arrow');
-      if (articles.length <= 1) {
-        arrows.forEach(arrow => arrow.style.display = 'none');
-      } else {
-        arrows.forEach(arrow => arrow.style.display = 'block');
-      }
+      arrows.forEach(arrow => {
+        arrow.style.display = articles.length <= 1 ? 'none' : 'block';
+      });
     }
 
     function scrollCarousel(dir) {
@@ -340,8 +322,20 @@
     async function displayArticle(file, title = null) {
       const res = await fetch(baseURL + file);
       const raw = await res.text();
-      const content = raw.split('---').slice(2).join('---').trim();
-      document.getElementById('reader').innerHTML = marked.parse(content);
+      const parts = raw.split('---');
+      const frontmatter = parseFrontMatter(raw);
+      const content = parts.slice(2).join('---').trim();
+
+      const metaHTML = `
+        <h2 style="color:#FF2ECC">${frontmatter.title || file}</h2>
+        <p><em>${frontmatter.date || ''}</em></p>
+        <p>${frontmatter.description || ''}</p>
+        ${frontmatter.tags?.length ? `<div class="tags">${frontmatter.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>` : ''}
+        <hr class="line" />
+      `;
+
+      document.getElementById('reader').innerHTML = metaHTML + marked.parse(content);
+
       const mascot = document.getElementById('mascot');
       const bubble = document.getElementById('bubble');
       mascot.style.transform = 'scale(1.1)';
@@ -354,6 +348,10 @@
         mascot.style.transform = 'scale(1)';
         bubble.classList.remove('show');
       }, 3000);
+
+      document.querySelector('.carousel-wrapper')?.remove();
+      document.querySelector('.search-bar')?.remove();
+
       document.title = `📖 ${title || file} — Hacqueen`;
       document.getElementById('reader').scrollIntoView({ behavior: 'smooth' });
     }
@@ -364,7 +362,6 @@
       const fileId = urlParams.get('id');
       if (fileId) {
         document.getElementById('articles').style.display = 'none';
-        document.querySelector('.search-bar')?.remove();
         const article = allArticles.find(a => a.file === fileId);
         displayArticle(fileId, article?.title || fileId);
       }
