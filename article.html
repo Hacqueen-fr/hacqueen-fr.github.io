@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Article — Hacqueen</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -195,7 +195,9 @@
       file = sanitizeFilename(file);
       try {
         const res = await fetch(baseURL + file);
+
         if (!res.ok) {
+          // If file doesn't exist, redirect
           location.href = 'articles.html';
           return;
         }
@@ -216,6 +218,7 @@
         document.getElementById('meta').innerHTML = metaHTML;
         document.getElementById('content').innerHTML = marked.parse(content);
 
+        // Bubble meow effect
         const mascot = document.getElementById('mascot');
         const bubble = document.getElementById('bubble');
         mascot.style.transform = 'scale(1.1)';
@@ -226,7 +229,7 @@
           mascot.style.transform = 'scale(1)';
           bubble.classList.remove('show');
         }, 3000);
-      } catch (err) {
+      } catch (e) {
         location.href = 'articles.html';
       }
     }
@@ -234,13 +237,9 @@
     function showThanks() {
       const bubble = document.getElementById('bubble');
       bubble.classList.add('show');
-      bubble.textContent = 'Thanks to Laluka for helping fix this page!';
-      setTimeout(() => {
-        bubble.textContent = '❤️';
-      }, 2500);
-      setTimeout(() => {
-        bubble.classList.remove('show');
-      }, 4500);
+      bubble.textContent = 'Thanks to Laluka for fixing this page 💖';
+      setTimeout(() => bubble.textContent = '❤️', 2500);
+      setTimeout(() => bubble.classList.remove('show'), 4500);
     }
 
     document.getElementById('mascot').addEventListener('click', showThanks);
