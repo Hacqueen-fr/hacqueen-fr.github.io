@@ -155,7 +155,6 @@
 
   <script>
     const baseURL = 'https://hacqueen-fr.github.io/posts/';
-    const knownPosts = ['first.md', 'second.md', 'third.md'];
 
     function parseFrontMatter(mdText) {
       if (!mdText.startsWith('---')) return {};
@@ -187,24 +186,25 @@
     async function loadArticle() {
       const urlParams = new URLSearchParams(location.search);
       let file = urlParams.get('id');
+
       if (!file) {
-        window.location.href = 'articles.html';
+        location.href = 'articles.html';
         return;
       }
 
       file = sanitizeFilename(file);
-      if (!knownPosts.includes(file)) {
-        window.location.href = 'articles.html';
-        return;
-      }
-
       try {
         const res = await fetch(baseURL + file);
+        if (!res.ok) {
+          location.href = 'articles.html';
+          return;
+        }
+
         const text = await res.text();
         const frontmatter = parseFrontMatter(text);
         const content = text.split('---').slice(2).join('---').trim();
 
-        document.title = (frontmatter.title || 'Article') + ' — Hacqueen';
+        document.title = (frontmatter.title || file) + ' — Hacqueen';
 
         const metaHTML = `
           <div class="cyber-title">${frontmatter.title || file}</div>
@@ -226,8 +226,8 @@
           mascot.style.transform = 'scale(1)';
           bubble.classList.remove('show');
         }, 3000);
-      } catch (e) {
-        window.location.href = 'articles.html';
+      } catch (err) {
+        location.href = 'articles.html';
       }
     }
 
