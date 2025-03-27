@@ -16,15 +16,20 @@
       color: #efefef;
       font-size: 16px;
       line-height: 1.6;
-      animation: flickerBg 1s ease-in-out;
+      transition: all 0.2s ease;
     }
 
-    @keyframes flickerBg {
-      0% { opacity: 0; }
-      25% { opacity: 0.3; }
-      50% { opacity: 0.6; }
-      75% { opacity: 0.9; }
-      100% { opacity: 1; }
+    body.glitching {
+      animation: bodyGlitch 0.6s steps(2, end) infinite;
+    }
+
+    @keyframes bodyGlitch {
+      0% { transform: translate(0) skew(0); filter: hue-rotate(0deg); }
+      20% { transform: translate(-2px, 2px) skew(1deg, 1deg); filter: hue-rotate(45deg); }
+      40% { transform: translate(2px, -2px) skew(-1deg, -1deg); filter: hue-rotate(-45deg); }
+      60% { transform: translate(-1px, 1px) skew(1deg, -1deg); filter: hue-rotate(90deg); }
+      80% { transform: translate(1px, -1px) skew(-1deg, 1deg); filter: hue-rotate(-90deg); }
+      100% { transform: translate(0) skew(0); filter: hue-rotate(0deg); }
     }
 
     h1, h2, h3 {
@@ -70,19 +75,6 @@
       filter: drop-shadow(0 0 20px #ff2ecc) drop-shadow(0 0 10px #00ffff);
     }
 
-    .mascot.glitch-effect {
-      animation: glitchImage 0.6s steps(2, end) infinite;
-    }
-
-    @keyframes glitchImage {
-      0% { transform: translate(0) skew(0); }
-      10% { transform: translate(-2px, 2px) skew(1deg, 1deg); }
-      20% { transform: translate(2px, -2px) skew(-1deg, -1deg); }
-      30% { transform: translate(-1px, 1px) skew(0.5deg, 0.5deg); }
-      40% { transform: translate(1px, -1px) skew(-0.5deg, -0.5deg); }
-      50% { transform: translate(0) skew(0); }
-    }
-
     .intro {
       margin-bottom: 40px;
     }
@@ -125,7 +117,6 @@
       font-family: 'Press Start 2P', cursive;
       font-size: 2.2em;
       letter-spacing: 2px;
-      animation: flickerText 1.5s ease-in-out;
     }
 
     .glitch::before,
@@ -152,13 +143,6 @@
       40% { clip: rect(0, 9999px, 0, 0); transform: translate(2px, -1px); }
       50% { clip: rect(0, 9999px, 100%, 0); transform: translate(-1px, -1px); }
       100% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
-    }
-
-    @keyframes flickerText {
-      0% { opacity: 0; }
-      30% { opacity: 0.4; }
-      60% { opacity: 0.7; }
-      100% { opacity: 1; }
     }
   </style>
 </head>
@@ -197,8 +181,8 @@
   <script>
     const mascot = document.getElementById('glitchMascot');
     mascot.addEventListener('click', () => {
-      mascot.classList.add('glitch-effect');
-      setTimeout(() => mascot.classList.remove('glitch-effect'), 1000);
+      document.body.classList.add('glitching');
+      setTimeout(() => document.body.classList.remove('glitching'), 1000);
     });
   </script>
 </body>
