@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Article — Hacqueen</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(160deg, #0a0a0a, #1e1f3a);
+      color: #efefef;
+    }
+
+    h1 {
+      text-align: center;
+      color: #A0E8FF;
+    }
+
+    .line {
+      height: 2px;
+      background: linear-gradient(to right, #00FFFF, #A020F0);
+      border: none;
+      margin: 20px 0;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-bottom: 30px;
+      padding: 10px 20px;
+      font-family: 'Orbitron', sans-serif;
+      color: #00FFFF;
+      border: 1px solid #00FFFF;
+      border-radius: 6px;
+      background: rgba(0, 255, 255, 0.05);
+      text-decoration: none;
+      transition: all 0.3s ease, transform 0.3s ease;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 46, 204, 0.15);
+      color: #FF2ECC;
+      transform: scale(1.05) rotate(-1deg);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    #article {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid #00ffff30;
+      padding: 30px;
+      border-radius: 8px;
+      margin-top: 20px;
+      box-shadow: 0 0 15px #00ffff20;
+    }
+
+    .tag {
+      display: inline-block;
+      margin: 3px;
+      padding: 4px 10px;
+      background: rgba(255, 46, 204, 0.2);
+      border: 1px solid #FF2ECC;
+      border-radius: 5px;
+      font-size: 0.8em;
+      color: #FF2ECC;
+    }
+
+    .cyber-title {
+      font-size: 2em;
+      color: #FF2ECC;
+      margin-bottom: 10px;
+    }
+
+    .bubble {
+      position: fixed;
+      bottom: 130px;
+      right: 130px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: 1px solid #00FFFF;
+      color: #A0E8FF;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      font-size: 0.9em;
+      max-width: 220px;
+      white-space: normal;
+      line-height: 1.3;
+    }
+
+    .bubble.show {
+      opacity: 1;
+    }
+
+    .mascot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 100px;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 10px #00ffff);
+      z-index: 10;
+      transition: transform 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="articles.html" class="back-button">← Back to Articles</a>
+    <div id="article">
+      <div id="meta"></div>
+      <div class="line"></div>
+      <div id="content"></div>
+    </div>
+  </div>
+
+  <img src="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cyber_cat.png" class="mascot" id="mascot" />
+  <div class="bubble" id="bubble">Meow</div>
+
+  <script>
+    const baseURL = 'https://hacqueen-fr.github.io/posts/';
+
+    function parseFrontMatter(mdText) {
+      if (!mdText.startsWith('---')) return {};
+      const lines = mdText.split('\n');
+      const meta = {};
+      let i = 1;
+      while (i < lines.length && lines[i].trim() !== '---') {
+        const line = lines[i].trim();
+        const [key, ...rest] = line.split(':');
+        const value = rest.join(':').trim();
+        if (key === 'tags') {
+          try {
+            meta[key] = JSON.parse(value.replace(/'/g, '"'));
+          } catch {
+            meta[key] = [];
+          }
+        } else {
+          meta[key] = value.replace(/^"|"$/g, '');
+        }
+        i++;
+      }
+      return meta;
+    }
+
+    async function loadArticle() {
+      const urlParams = new URLSearchParams(location.search);
+      const file = urlParams.get('id');
+
+      if (!file) {
+        document.getElementById('content').innerHTML = '<p>❌ No article specified.</p>';
+        return;
+      }
+
+      const res = await fetch(baseURL + file);
+      const text = await res.text();
+      const frontmatter = parseFrontMatter(text);
+      const content = text.split('---').slice(2).join('---').trim();
+
+      document.title = frontmatter.title + ' — Hacqueen';
+
+      const metaHTML = `
+        <div class="cyber-title">${frontmatter.title || file}</div>
+        <p><em>${frontmatter.date || ''}</em></p>
+        <p>${frontmatter.description || ''}</p>
+        ${frontmatter.tags?.length ? `<div>${frontmatter.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>` : ''}
+      `;
+
+      document.getElementById('meta').innerHTML = metaHTML;
+      document.getElementById('content').innerHTML = marked.parse(content);
+
+      const mascot = document.getElementById('mascot');
+      const bubble = document.getElementById('bubble');
+      mascot.style.transform = 'scale(1.1)';
+      bubble.classList.add('show');
+      bubble.textContent = 'Meow!';
+      setTimeout(() => bubble.textContent = frontmatter.title || file, 1000);
+      setTimeout(() => {
+        mascot.style.transform = 'scale(1)';
+        bubble.classList.remove('show');
+      }, 3000);
+    }
+
+    window.addEventListener('DOMContentLoaded', loadArticle);
+  </script>
+</body>
+</html>
