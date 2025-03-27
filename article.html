@@ -37,7 +37,6 @@
     code {
       color: #FF2ECC;
       font-family: 'Courier New', monospace;
-      background: none;
     }
 
     #content img {
@@ -121,6 +120,7 @@
       max-width: 220px;
       white-space: normal;
       line-height: 1.3;
+      z-index: 999;
     }
 
     .bubble.show {
@@ -136,6 +136,7 @@
       filter: drop-shadow(0 0 10px #00ffff);
       z-index: 10;
       transition: transform 0.3s ease;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -230,6 +231,19 @@
       }
     }
 
+    function showThanks() {
+      const bubble = document.getElementById('bubble');
+      bubble.classList.add('show');
+      bubble.textContent = 'Thanks to Laluka for helping fix this page!';
+      setTimeout(() => {
+        bubble.textContent = '❤️';
+      }, 2500);
+      setTimeout(() => {
+        bubble.classList.remove('show');
+      }, 4500);
+    }
+
+    document.getElementById('mascot').addEventListener('click', showThanks);
     window.addEventListener('DOMContentLoaded', loadArticle);
   </script>
 </body>
