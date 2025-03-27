@@ -210,7 +210,7 @@
   <a href="#" id="backToTop" title="Back to top">↑</a>
 
   <script>
-    const posts = ['first.md', 'second.md', 'third.md'];
+    const posts = ['first.md', 'second.md'];
     const baseURL = 'https://hacqueen-fr.github.io/posts/';
     const allArticles = [];
 
@@ -219,9 +219,9 @@
       for (const file of posts) {
         const res = await fetch(baseURL + file);
         const text = await res.text();
-        const title = text.match(/title:\s*(.*)/)?.[1]?.trim() || file;
-        const date = text.match(/date:\s*(.*)/)?.[1]?.trim() || '';
-        const description = text.match(/description:\s*(.*)/)?.[1]?.trim() || 'No description.';
+        const title = (text.match(/title:\s*"(.*?)"/)?.[1] || file).replace(/'/g, "\\'");
+        const date = text.match(/date:\s*"(.*?)"/)?.[1] || '';
+        const description = text.match(/description:\s*"(.*?)"/)?.[1] || 'No description.';
         const tagsRaw = text.match(/tags:\s*\[(.*?)\]/)?.[1] || '';
         const tags = tagsRaw.split(',').map(t => t.trim().replace(/['"]/g, '')).filter(Boolean);
         const content = text.startsWith('---') ? text.split('---').slice(2).join('---').trim() : text;
@@ -246,7 +246,6 @@
       const container = document.getElementById('articles');
       container.innerHTML = '';
       articles.forEach(article => {
-        const safeTitle = article.title.replace(/'/g, "\\'");
         const card = document.createElement('div');
         card.className = 'article-card';
         card.innerHTML = `
@@ -254,7 +253,7 @@
           <p><em>${article.date}</em></p>
           <p>${article.description}</p>
           <div class="tags">${article.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>
-          <button class="button" onclick="displayArticle('${article.file}', '${safeTitle}')">📖 Read</button>
+          <button class="button" onclick="displayArticle('${article.file}', \`${article.title}\`)">📖 Read</button>
           <button class="button" onclick="copyLink('${article.file}')">🔗 Copy Link</button>
           <button class="button" onclick="shareToX('${article.file}')">🐦 Share</button>
           <button class="button" onclick="shareToMastodon('${article.file}')">🐘 Mastodon</button>
@@ -329,10 +328,6 @@
         document.querySelector('.search-bar')?.remove();
         const article = allArticles.find(a => a.file === fileId);
         displayArticle(fileId, article?.title || fileId);
-      } else if (tagFilter) {
-        const filtered = allArticles.filter(a => a.tags.includes(tagFilter));
-        document.getElementById('tagFilter').value = tagFilter;
-        displayArticles(filtered);
       }
 
       document.getElementById('search').addEventListener('input', e => {
