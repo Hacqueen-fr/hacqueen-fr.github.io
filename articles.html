@@ -18,6 +18,23 @@
       text-align: center;
       color: #A0E8FF;
     }
+    .home-button {
+      display: inline-block;
+      margin-bottom: 30px;
+      padding: 10px 20px;
+      font-family: 'Orbitron', sans-serif;
+      color: #00FFFF;
+      border: 1px solid #00FFFF;
+      border-radius: 6px;
+      background: rgba(0, 255, 255, 0.05);
+      text-decoration: none;
+      transition: all 0.3s ease, transform 0.3s ease;
+    }
+    .home-button:hover {
+      background: rgba(255, 46, 204, 0.15);
+      color: #FF2ECC;
+      transform: scale(1.05) rotate(-1deg);
+    }
     .container {
       max-width: 100%;
       margin: auto;
@@ -168,7 +185,7 @@
 </head>
 <body>
   <div class="container">
-    <a href="index.html" class="button">← Back to Home</a>
+    <a href="index.html" class="home-button">← Back to Home</a>
     <h1>Articles & Write-Ups</h1>
 
     <div class="search-bar">
@@ -249,7 +266,6 @@
       const container = document.getElementById('articles');
       container.innerHTML = '';
       articles.forEach(article => {
-        const safeTitle = article.title.replace(/'/g, "\\'");
         const card = document.createElement('div');
         card.className = 'article-card';
         card.innerHTML = `
@@ -325,8 +341,6 @@
       await loadArticles();
       const urlParams = new URLSearchParams(location.search);
       const fileId = urlParams.get('id');
-      const tag = urlParams.get('tag');
-
       if (fileId) {
         document.getElementById('articles').style.display = 'none';
         document.querySelector('.search-bar')?.remove();
