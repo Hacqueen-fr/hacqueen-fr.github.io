@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Article — Hacqueen</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -21,35 +21,33 @@
     }
 
     pre {
-  background: rgba(0, 255, 255, 0.05);
-  border: 1px solid #00FFFF33;
-  padding: 15px;
-  border-radius: 8px;
-  overflow-x: auto;
-  color: #A0E8FF;
-  font-family: 'Courier New', monospace;
-  font-size: 0.95em;
-  line-height: 1.6;
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
-  margin-bottom: 20px;
-}
+      background: rgba(0, 255, 255, 0.05);
+      border: 1px solid #00FFFF33;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      color: #A0E8FF;
+      font-family: 'Courier New', monospace;
+      font-size: 0.95em;
+      line-height: 1.6;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+      margin-bottom: 20px;
+    }
 
-code {
-  color: #FF2ECC;
-  font-family: 'Courier New', monospace;
-  background: none;
-}
+    code {
+      color: #FF2ECC;
+      font-family: 'Courier New', monospace;
+      background: none;
+    }
 
-    
-#content img {
-  display: block;
-  margin: 30px auto;
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 0 12px #00ffff50;
-}
-
+    #content img {
+      display: block;
+      margin: 30px auto;
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 0 12px #00ffff50;
+    }
 
     .line {
       height: 2px;
@@ -180,21 +178,27 @@ code {
       return meta;
     }
 
+    function sanitizeFilename(str) {
+      return str.replace(/[^a-zA-Z0-9_.-]/g, '');
+    }
+
     async function loadArticle() {
       const urlParams = new URLSearchParams(location.search);
-      const file = urlParams.get('id');
+      let file = urlParams.get('id');
 
       if (!file) {
         document.getElementById('content').innerHTML = '<p>❌ No article specified.</p>';
         return;
       }
 
+      file = sanitizeFilename(file);
+
       const res = await fetch(baseURL + file);
       const text = await res.text();
       const frontmatter = parseFrontMatter(text);
       const content = text.split('---').slice(2).join('---').trim();
 
-      document.title = frontmatter.title + ' — Hacqueen';
+      document.title = (frontmatter.title || 'Article') + ' — Hacqueen';
 
       const metaHTML = `
         <div class="cyber-title">${frontmatter.title || file}</div>
