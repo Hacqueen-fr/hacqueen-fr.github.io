@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hacqueen — Articles</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -235,7 +235,7 @@
         const text = await res.text();
         const frontmatter = parseFrontMatter(text);
         const content = text.split('---').slice(2).join('---').trim();
-        const title = (frontmatter.title || file).replace(/'/g, "\\'");
+        const title = frontmatter.title || file;
         const date = frontmatter.date || '';
         const description = frontmatter.description || 'No description.';
         const tags = frontmatter.tags || [];
@@ -271,6 +271,7 @@
           </div>
           <div class="card-footer">
             <button class="button" onclick="displayArticle('${article.file}', \`${article.title}\`)">📖 Read</button>
+            <button class="button" onclick="window.open('article.html?id=${article.file}', '_blank')">🪄 View Full Page</button>
             <button class="button" onclick="copyLink('${article.file}')">🔗 Copy Link</button>
             <button class="button" onclick="shareToX('${article.file}')">🐦 Share</button>
             <button class="button" onclick="shareToMastodon('${article.file}')">🐘 Mastodon</button>
@@ -286,17 +287,12 @@
     }
 
     function scrollCarousel(dir) {
-      document.getElementById('articles').scrollBy({
-        left: dir * 320,
-        behavior: 'smooth'
-      });
+      document.getElementById('articles').scrollBy({ left: dir * 320, behavior: 'smooth' });
     }
 
     function copyLink(file) {
       const url = `${location.origin}${location.pathname}?id=${file}`;
-      navigator.clipboard.writeText(url).then(() => {
-        showBubble("🔗 Copied!");
-      });
+      navigator.clipboard.writeText(url).then(() => showBubble("🔗 Copied!"));
     }
 
     function showBubble(text) {
@@ -322,9 +318,8 @@
     async function displayArticle(file, title = null) {
       const res = await fetch(baseURL + file);
       const raw = await res.text();
-      const parts = raw.split('---');
       const frontmatter = parseFrontMatter(raw);
-      const content = parts.slice(2).join('---').trim();
+      const content = raw.split('---').slice(2).join('---').trim();
 
       const metaHTML = `
         <h2 style="color:#FF2ECC">${frontmatter.title || file}</h2>
@@ -341,27 +336,20 @@
       mascot.style.transform = 'scale(1.1)';
       bubble.classList.add('show');
       bubble.textContent = 'Meow!';
-      setTimeout(() => {
-        bubble.textContent = title || file;
-      }, 1000);
+      setTimeout(() => bubble.textContent = title || file, 1000);
       setTimeout(() => {
         mascot.style.transform = 'scale(1)';
         bubble.classList.remove('show');
       }, 3000);
 
-      document.querySelector('.carousel-wrapper')?.remove();
-      document.querySelector('.search-bar')?.remove();
-
-      document.title = `📖 ${title || file} — Hacqueen`;
       document.getElementById('reader').scrollIntoView({ behavior: 'smooth' });
     }
 
-    async function start() {
+    window.addEventListener('DOMContentLoaded', async () => {
       await loadArticles();
       const urlParams = new URLSearchParams(location.search);
       const fileId = urlParams.get('id');
       if (fileId) {
-        document.getElementById('articles').style.display = 'none';
         const article = allArticles.find(a => a.file === fileId);
         displayArticle(fileId, article?.title || fileId);
       }
@@ -381,9 +369,7 @@
         const filtered = val ? allArticles.filter(a => a.tags.includes(val)) : allArticles;
         displayArticles(filtered);
       });
-    }
-
-    window.addEventListener('DOMContentLoaded', start);
+    });
   </script>
 </body>
 </html>
