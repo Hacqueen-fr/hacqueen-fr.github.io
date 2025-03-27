@@ -31,13 +31,14 @@
       width: 100vw;
       height: 100vh;
       pointer-events: none;
-      z-index: 9999;
+      z-index: -1;
       opacity: 0;
       transition: opacity 0.2s ease;
     }
 
     .glitch-active canvas#crtCanvas {
-      opacity: 0.12;
+      opacity: 0.15;
+      z-index: 9999;
       animation: shake 0.15s infinite;
     }
 
@@ -166,6 +167,7 @@
 </head>
 <body>
   <canvas id="crtCanvas"></canvas>
+
   <div class="container">
     <div class="header">
       <div>
@@ -200,8 +202,14 @@
   <script>
     const canvas = document.getElementById('crtCanvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
     function drawCRTScanlines() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -221,11 +229,6 @@
         clearInterval(interval);
       }, 2000);
     }
-
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
   </script>
 </body>
 </html>
