@@ -154,6 +154,7 @@
 
   <script>
     const baseURL = 'https://hacqueen-fr.github.io/posts/';
+    const knownPosts = ['first.md', 'second.md', 'third.md'];
 
     function parseFrontMatter(mdText) {
       if (!mdText.startsWith('---')) return {};
@@ -185,41 +186,48 @@
     async function loadArticle() {
       const urlParams = new URLSearchParams(location.search);
       let file = urlParams.get('id');
-
       if (!file) {
-        document.getElementById('content').innerHTML = '<p>❌ No article specified.</p>';
+        window.location.href = 'articles.html';
         return;
       }
 
       file = sanitizeFilename(file);
+      if (!knownPosts.includes(file)) {
+        window.location.href = 'articles.html';
+        return;
+      }
 
-      const res = await fetch(baseURL + file);
-      const text = await res.text();
-      const frontmatter = parseFrontMatter(text);
-      const content = text.split('---').slice(2).join('---').trim();
+      try {
+        const res = await fetch(baseURL + file);
+        const text = await res.text();
+        const frontmatter = parseFrontMatter(text);
+        const content = text.split('---').slice(2).join('---').trim();
 
-      document.title = (frontmatter.title || 'Article') + ' — Hacqueen';
+        document.title = (frontmatter.title || 'Article') + ' — Hacqueen';
 
-      const metaHTML = `
-        <div class="cyber-title">${frontmatter.title || file}</div>
-        <p><em>${frontmatter.date || ''}</em></p>
-        <p>${frontmatter.description || ''}</p>
-        ${frontmatter.tags?.length ? `<div>${frontmatter.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>` : ''}
-      `;
+        const metaHTML = `
+          <div class="cyber-title">${frontmatter.title || file}</div>
+          <p><em>${frontmatter.date || ''}</em></p>
+          <p>${frontmatter.description || ''}</p>
+          ${frontmatter.tags?.length ? `<div>${frontmatter.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>` : ''}
+        `;
 
-      document.getElementById('meta').innerHTML = metaHTML;
-      document.getElementById('content').innerHTML = marked.parse(content);
+        document.getElementById('meta').innerHTML = metaHTML;
+        document.getElementById('content').innerHTML = marked.parse(content);
 
-      const mascot = document.getElementById('mascot');
-      const bubble = document.getElementById('bubble');
-      mascot.style.transform = 'scale(1.1)';
-      bubble.classList.add('show');
-      bubble.textContent = 'Meow!';
-      setTimeout(() => bubble.textContent = frontmatter.title || file, 1000);
-      setTimeout(() => {
-        mascot.style.transform = 'scale(1)';
-        bubble.classList.remove('show');
-      }, 3000);
+        const mascot = document.getElementById('mascot');
+        const bubble = document.getElementById('bubble');
+        mascot.style.transform = 'scale(1.1)';
+        bubble.classList.add('show');
+        bubble.textContent = 'Meow!';
+        setTimeout(() => bubble.textContent = frontmatter.title || file, 1000);
+        setTimeout(() => {
+          mascot.style.transform = 'scale(1)';
+          bubble.classList.remove('show');
+        }, 3000);
+      } catch (e) {
+        window.location.href = 'articles.html';
+      }
     }
 
     window.addEventListener('DOMContentLoaded', loadArticle);
