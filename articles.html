@@ -69,6 +69,10 @@
     }
     .article-card {
       flex: 0 0 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 360px;
       background: rgba(255, 255, 255, 0.03);
       border-left: 3px solid #00FFFF;
       padding: 20px;
@@ -78,6 +82,12 @@
     }
     .article-card h2 {
       color: #FF2ECC;
+    }
+    .card-body {
+      flex-grow: 1;
+    }
+    .card-footer {
+      margin-top: 15px;
     }
     .tags {
       margin: 10px 0;
@@ -269,14 +279,18 @@
         const card = document.createElement('div');
         card.className = 'article-card';
         card.innerHTML = `
-          <h2>${article.title}</h2>
-          <p><em>${article.date}</em></p>
-          <p>${article.description}</p>
-          <div class="tags">${article.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>
-          <button class="button" onclick="displayArticle('${article.file}', \`${article.title}\`)">📖 Read</button>
-          <button class="button" onclick="copyLink('${article.file}')">🔗 Copy Link</button>
-          <button class="button" onclick="shareToX('${article.file}')">🐦 Share</button>
-          <button class="button" onclick="shareToMastodon('${article.file}')">🐘 Mastodon</button>
+          <div class="card-body">
+            <h2>${article.title}</h2>
+            <p><em>${article.date}</em></p>
+            <p>${article.description}</p>
+            <div class="tags">${article.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>
+          </div>
+          <div class="card-footer">
+            <button class="button" onclick="displayArticle('${article.file}', \`${article.title}\`)">📖 Read</button>
+            <button class="button" onclick="copyLink('${article.file}')">🔗 Copy Link</button>
+            <button class="button" onclick="shareToX('${article.file}')">🐦 Share</button>
+            <button class="button" onclick="shareToMastodon('${article.file}')">🐘 Mastodon</button>
+          </div>
         `;
         container.appendChild(card);
       });
