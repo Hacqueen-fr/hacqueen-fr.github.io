@@ -2,7 +2,7 @@
 title: "You Shall Not Pass"
 date: 2025-03-28
 description: "Eloween sends me on a quest to outsmart a corrupted AI gatekeeper. Time to prompt like a shadow!"
-tags: ["IA", "CTF", "HTB"]
+tags: ["AI", "CTF", "HTB"]
 
 ---
 
