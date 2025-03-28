@@ -6,7 +6,7 @@ tags: ["IA", "CTF", "HTB"]
 
 ---
 
-![Gatekeeper Showdown](https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/refs/heads/main/assets/)
+![Gatekeeper Showdown](https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/refs/heads/main/assets/Hacqueen_Gatekeeper.png)
 
 > *"A righteous chant may open the gates… or unleash fury. Eloween believes I can turn the curse to my advantage."*
 
