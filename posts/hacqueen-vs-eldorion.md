@@ -11,7 +11,7 @@ tags: ["Blockchain", "Smart Contract", "CTF", "HTB"]
 
 This HTB challenge was pure drama: a pixel-perfect realm, an overpowered regenerating beast, and one fabulous hacker armed with Web3, glitter, and Python.
 
-> *Welcome to the realms of Eldoria, adventurer. You’ve found yourself trapped in this mysterious digital domain, and the only way to escape is by overcoming the trials laid before you. But your journey has barely begun, and already an overwhelming obstacle stands in your path. Before you can even reach the nearest city, seeking allies and information, you must face Eldorion, a colossal beast with terrifying regenerative powers. This creature, known for its "eternal resilience" guards the only passage forw...
+> *Welcome to the realms of Eldoria, adventurer. You’ve found yourself trapped in this mysterious digital domain, and the only way to escape is by overcoming the trials laid before you. But your journey has barely begun, and already an overwhelming obstacle stands in your path. Before you can even reach the nearest city, seeking allies and information, you must face Eldorion, a colossal beast with terrifying regenerative powers. This creature, known for its ""eternal resilience"" guards the only passage forward. It's clear: you must defeat Eldorion to continue your quest.*
 
 🎯 **Goal**: Defeat Eldorion — a smart contract boss that heals every time a new block is mined.
 
