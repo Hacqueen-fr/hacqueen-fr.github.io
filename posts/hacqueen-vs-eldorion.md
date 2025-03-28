@@ -1,5 +1,5 @@
 ---
-title: hacqueen-vs-eldorion
+title: hacqueen vs eldorion
 date: 2025-03-26
 description: A glitter-fueled showdown between Hacqueen and a self-healing smart contract beast. Spoiler: the unicorn doesn’t miss.
 tags: ["Blockchain", "Smart Contract", "CTF", "HTB"]
