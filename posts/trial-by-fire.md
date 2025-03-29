@@ -140,6 +140,13 @@ HTB{Fl4m3_P34ks_Tr14l_Burn5_Br1ght_7561b68252ca1d67c68357bea75f7386}
 
 ---
 
+## 🧡 Special Thanks
+
+Shout-out to [**Juliusxd23**](https://github.com/Juliusxd23) who slayed the Fire Drake before me and helped pave the way.  
+Sometimes, the true strength is in the alliance.
+
+---
+
 ❤️‍🔥 The only fire that matters is the one you light in the template engine.
 
 **– Hacqueen**
