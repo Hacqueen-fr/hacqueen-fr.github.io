@@ -155,7 +155,7 @@ Output:
 ## 🏁 The Flag
 
 ```text
-HTB{Dragons_Navigate_By_Data}
+HTB{DR4G0N_FL1GHT_5TR33_9bb7b0c04000f530025b4be6b4210dff}
 ```
 
 I tamed the winds not with wings, but with logic. Eloween smiles — the skies are ours again.
@@ -168,7 +168,7 @@ I tamed the winds not with wings, but with logic. Eloween smiles — the skies a
 - `U i x` updates a segment’s value.
 - `Q l r` asks for best continuous segment (max subarray sum).
 - Segment Tree handles fast updates/queries.
-- Final flag: `HTB{Dragons_Navigate_By_Data}`
+- Final flag: `HTB{DR4G0N_FL1GHT_5TR33_9bb7b0c04000f530025b4be6b4210dff}`
 
 ---
 
