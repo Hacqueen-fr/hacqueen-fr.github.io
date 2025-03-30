@@ -4,24 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hacqueen — Articles</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Open+Sans&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     html {
       scroll-behavior: smooth;
     }
+
     body {
       margin: 0;
       padding: 40px;
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Open Sans', sans-serif;
       font-size: 17px;
       line-height: 1.7;
       color: #f0f0f0;
       background: linear-gradient(160deg, #0a0a0a, #1e1f3a);
     }
 
-    h1 {
-      text-align: center;
+    h1, h2 {
+      font-family: 'Orbitron', sans-serif;
       color: #A0E8FF;
     }
 
@@ -103,6 +104,7 @@
     }
 
     .article-card h2 {
+      font-family: 'Orbitron', sans-serif;
       color: #FF2ECC;
     }
 
@@ -139,6 +141,7 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 0.8em;
+      font-family: 'Orbitron', sans-serif;
     }
 
     .button:hover {
@@ -354,19 +357,28 @@
           <div class="card-footer">
             <button class="button" onclick="displayArticle('${article.file}', \`${article.title}\`)">📖 Read</button>
             <button class="button" onclick="window.open('article.html?id=${article.file}', '_blank')">🪄 View Full Page</button>
+            <button class="button" onclick="navigator.clipboard.writeText(location.origin + '/article.html?id=${article.file}').then(() => showBubble('🔗 Copied!'))">🔗 Copy Link</button>
+            <button class="button" onclick="window.open('https://twitter.com/intent/tweet?text=Check+this+out:+${location.origin}/article.html?id=${article.file}')">🐦 Share</button>
+            <button class="button" onclick="const m = prompt('Mastodon instance?'); if(m) window.open('https://'+m+'/share?text='+encodeURIComponent('${location.origin}/article.html?id=${article.file}'));">🐘 Mastodon</button>
           </div>
         `;
         container.appendChild(card);
       });
 
-      const arrows = document.querySelectorAll('.carousel-arrow');
-      arrows.forEach(arrow => {
+      document.querySelectorAll('.carousel-arrow').forEach(arrow => {
         arrow.style.display = articles.length <= 1 ? 'none' : 'block';
       });
     }
 
     function scrollCarousel(dir) {
       document.getElementById('articles').scrollBy({ left: dir * 320, behavior: 'smooth' });
+    }
+
+    function showBubble(text) {
+      const bubble = document.getElementById('bubble');
+      bubble.textContent = text;
+      bubble.classList.add('show');
+      setTimeout(() => bubble.classList.remove('show'), 2000);
     }
 
     async function displayArticle(file, title = null) {
