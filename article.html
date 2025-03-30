@@ -4,21 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Article — Hacqueen</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Open+Sans&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
       margin: 0;
       padding: 40px;
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Open Sans', sans-serif;
       background: linear-gradient(160deg, #0a0a0a, #1e1f3a);
       color: #efefef;
       font-size: 17px;
       line-height: 1.7;
     }
 
-    h1 {
-      text-align: center;
+    h1, h2 {
+      font-family: 'Orbitron', sans-serif;
       color: #A0E8FF;
     }
 
@@ -47,11 +47,10 @@
     }
 
     #article {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid #00ffff30;
       padding: 30px;
-      border-radius: 8px;
-      margin-top: 20px;
+      border-radius: 10px;
       box-shadow: 0 0 15px #00ffff20;
     }
 
@@ -72,13 +71,6 @@
       color: #FF2ECC;
     }
 
-    .line {
-      height: 2px;
-      background: linear-gradient(to right, #00FFFF, #A020F0);
-      border: none;
-      margin: 20px 0;
-    }
-
     pre {
       background: rgba(0, 255, 255, 0.07);
       border: 1px solid #00FFFF33;
@@ -89,8 +81,8 @@
       font-family: 'Courier New', monospace;
       font-size: 0.95em;
       line-height: 1.6;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
       margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
     }
 
     code {
@@ -101,7 +93,6 @@
     #content img {
       display: block;
       margin: 30px auto;
-      max-width: 100%;
       width: 500px;
       height: 750px;
       object-fit: cover;
@@ -109,16 +100,11 @@
       box-shadow: 0 0 12px #00ffff50;
     }
 
-    .mascot {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 100px;
-      border-radius: 50%;
-      filter: drop-shadow(0 0 10px #00ffff);
-      z-index: 10;
-      transition: transform 0.3s ease;
-      cursor: pointer;
+    .line {
+      height: 2px;
+      background: linear-gradient(to right, #00FFFF, #A020F0);
+      border: none;
+      margin: 20px 0;
     }
 
     .bubble {
@@ -142,6 +128,18 @@
     .bubble.show {
       opacity: 1;
     }
+
+    .mascot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 100px;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 10px #00ffff);
+      z-index: 10;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -159,11 +157,7 @@
 
   <script>
     const baseURL = 'https://hacqueen-fr.github.io/posts/';
-    const knownArticles = [
-      'hacqueen-vs-eldorion.md',
-      'hacqueen-vs-gatekeeper.md',
-      'trial-by-fire.md'
-    ];
+    const postList = ['hacqueen-vs-eldorion.md', 'hacqueen-vs-gatekeeper.md', 'trial-by-fire.md'];
 
     function parseFrontMatter(mdText) {
       if (!mdText.startsWith('---')) return {};
@@ -196,20 +190,15 @@
       const urlParams = new URLSearchParams(location.search);
       let file = urlParams.get('id');
 
-      if (!file) {
-        location.href = 'articles.html';
-        return;
-      }
+      if (!file) return location.href = 'articles.html';
 
       file = sanitizeFilename(file);
-
-      if (!knownArticles.includes(file)) {
-        location.href = 'articles.html';
-        return;
-      }
+      if (!postList.includes(file)) return location.href = 'articles.html';
 
       try {
         const res = await fetch(baseURL + file);
+        if (!res.ok) return location.href = 'articles.html';
+
         const text = await res.text();
         const frontmatter = parseFrontMatter(text);
         const content = text.split('---').slice(2).join('---').trim();
@@ -226,7 +215,7 @@
         document.getElementById('meta').innerHTML = metaHTML;
         document.getElementById('content').innerHTML = marked.parse(content);
 
-        // Mascot interaction
+        // Bubble effect
         const mascot = document.getElementById('mascot');
         const bubble = document.getElementById('bubble');
         mascot.style.transform = 'scale(1.1)';
@@ -242,14 +231,15 @@
       }
     }
 
-    document.getElementById('mascot').addEventListener('click', () => {
+    function showThanks() {
       const bubble = document.getElementById('bubble');
       bubble.classList.add('show');
       bubble.textContent = 'Thanks to Laluka for fixing this page 💖';
       setTimeout(() => bubble.textContent = '❤️', 2500);
       setTimeout(() => bubble.classList.remove('show'), 4500);
-    });
+    }
 
+    document.getElementById('mascot').addEventListener('click', showThanks);
     window.addEventListener('DOMContentLoaded', loadArticle);
   </script>
 </body>
