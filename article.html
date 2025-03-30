@@ -140,6 +140,29 @@
       transition: transform 0.3s ease;
       cursor: pointer;
     }
+
+    #backToTop {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      font-size: 22px;
+      padding: 10px 16px;
+      background: rgba(0,255,255,0.1);
+      border: 2px solid #00FFFF;
+      border-radius: 8px;
+      color: #00FFFF;
+      font-family: 'Orbitron', sans-serif;
+      box-shadow: 0 0 10px #00ffff50;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      z-index: 99;
+    }
+
+    #backToTop:hover {
+      color: #FF2ECC;
+      background-color: rgba(255, 46, 204, 0.2);
+      transform: scale(1.1) rotate(-2deg);
+    }
   </style>
 </head>
 <body>
@@ -152,6 +175,7 @@
     </div>
   </div>
 
+  <a href="#" id="backToTop" title="Back to top">↑</a>
   <img src="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cyber_cat.png" class="mascot" id="mascot" />
   <div class="bubble" id="bubble">Meow</div>
 
@@ -189,7 +213,6 @@
     async function loadArticle() {
       const urlParams = new URLSearchParams(location.search);
       let file = urlParams.get('id');
-
       if (!file) return location.href = 'articles.html';
 
       file = sanitizeFilename(file);
@@ -211,11 +234,9 @@
           <p>${frontmatter.description || ''}</p>
           ${frontmatter.tags?.length ? `<div>${frontmatter.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>` : ''}
         `;
-
         document.getElementById('meta').innerHTML = metaHTML;
         document.getElementById('content').innerHTML = marked.parse(content);
 
-        // Bubble effect
         const mascot = document.getElementById('mascot');
         const bubble = document.getElementById('bubble');
         mascot.style.transform = 'scale(1.1)';
@@ -240,6 +261,12 @@
     }
 
     document.getElementById('mascot').addEventListener('click', showThanks);
+
+    document.getElementById('backToTop').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
     window.addEventListener('DOMContentLoaded', loadArticle);
   </script>
 </body>
