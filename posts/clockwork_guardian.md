@@ -2,7 +2,7 @@
 title: "Clockwork Guardian"
 date: 2025-03-30
 description: "Eloween warns me of rogue sentinels haunting the Skywatch Spire. The only way out is through the gears..."
-tags: ["CTF", "HTB", "Pathfinding", "A* or Die"]
+tags: ["CTF", "HTB", "Pathfinding", "Coding"]
 ---
 
 ![Clockwork Guardian](https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/refs/heads/main/assets/hacqueen_clockwork.png)
@@ -68,9 +68,11 @@ from collections import deque
 import ast
 
 def shortest_safe_path(grid):
-    rows, cols = len(grid)
-    end = None
+    rows = len(grid)
+    cols = len(grid[0])
 
+    # Trouver la position de 'E'
+    end = None
     for i in range(rows):
         for j in range(cols):
             if str(grid[i][j]).upper() == 'E':
@@ -92,9 +94,11 @@ def shortest_safe_path(grid):
 
     while queue:
         x, y, steps = queue.popleft()
+
         if (x, y) == (ex, ey):
             print(steps)
             return
+
         for dx, dy in directions:
             nx, ny = x + dx, y + dy
             if 0 <= nx < rows and 0 <= ny < cols and not visited[nx][ny]:
@@ -104,10 +108,10 @@ def shortest_safe_path(grid):
 
     print(-1)
 
-raw_input = input().strip()
-import ast
-grid = ast.literal_eval(raw_input)
-shortest_safe_path(grid)
+if __name__ == "__main__":
+    raw_input = input().strip()
+    grid = ast.literal_eval(raw_input)
+    shortest_safe_path(grid)
 ```
 
 ---
