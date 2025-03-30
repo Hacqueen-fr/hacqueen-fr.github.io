@@ -260,6 +260,170 @@
   </style>
 </head>
 <body>
-  <!-- Ton HTML continue ici (boutons, contenu, scripts JS, etc.) -->
+  <div class="container">
+    <a href="index.html" class="home-button">← Back to Home</a>
+    <h1>Articles & Write-Ups</h1>
+
+    <div class="search-bar">
+      <input type="text" id="search" placeholder="Search..." />
+      <select id="tagFilter"><option value="">All Tags</option></select>
+    </div>
+
+    <div class="carousel-wrapper">
+      <span class="carousel-arrow arrow-left" onclick="scrollCarousel(-1)">←</span>
+      <div class="carousel" id="articles"></div>
+      <span class="carousel-arrow arrow-right" onclick="scrollCarousel(1)">→</span>
+    </div>
+
+    <div id="reader"></div>
+  </div>
+
+  <img src="https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/main/cyber_cat.png" class="mascot" id="mascot" />
+  <div class="bubble" id="bubble">Meow</div>
+  <a href="#" id="backToTop" title="Back to top">↑</a>
+
+  <script>
+    const posts = ['hacqueen-vs-eldorion.md', 'hacqueen-vs-gatekeeper.md', 'trial-by-fire.md'];
+    const baseURL = 'https://hacqueen-fr.github.io/posts/';
+    const allArticles = [];
+
+    function parseFrontMatter(mdText) {
+      if (!mdText.startsWith('---')) return {};
+      const lines = mdText.split('\n');
+      const meta = {};
+      let i = 1;
+      while (i < lines.length && lines[i].trim() !== '---') {
+        const line = lines[i].trim();
+        const [key, ...rest] = line.split(':');
+        const value = rest.join(':').trim();
+        if (key === 'tags') {
+          try {
+            meta[key] = JSON.parse(value.replace(/'/g, '"'));
+          } catch {
+            meta[key] = [];
+          }
+        } else {
+          meta[key] = value.replace(/^"|"$/g, '');
+        }
+        i++;
+      }
+      return meta;
+    }
+
+    async function loadArticles() {
+      const tagSet = new Set();
+      for (const file of posts) {
+        const res = await fetch(baseURL + file);
+        const text = await res.text();
+        const frontmatter = parseFrontMatter(text);
+        const content = text.split('---').slice(2).join('---').trim();
+        const title = frontmatter.title || file;
+        const date = frontmatter.date || '';
+        const description = frontmatter.description || 'No description.';
+        const tags = frontmatter.tags || [];
+        tags.forEach(tag => tagSet.add(tag));
+        allArticles.push({ file, title, date, description, tags, content });
+      }
+      updateTagFilter([...tagSet]);
+      displayArticles(allArticles);
+    }
+
+    function updateTagFilter(tags) {
+      const select = document.getElementById('tagFilter');
+      tags.sort().forEach(tag => {
+        const option = document.createElement('option');
+        option.value = tag;
+        option.textContent = tag;
+        select.appendChild(option);
+      });
+    }
+
+    function displayArticles(articles) {
+      const container = document.getElementById('articles');
+      container.innerHTML = '';
+      articles.forEach(article => {
+        const card = document.createElement('div');
+        card.className = 'article-card';
+        card.innerHTML = `
+          <div class="card-body">
+            <h2>${article.title}</h2>
+            <p><em>${article.date}</em></p>
+            <p>${article.description}</p>
+            <div class="tags">${article.tags.slice(0, 3).map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>
+          </div>
+          <div class="card-footer">
+            <button class="button" onclick="displayArticle('${article.file}', \`${article.title}\`)">📖 Read</button>
+            <button class="button" onclick="window.open('article.html?id=${article.file}', '_blank')">🪄 View Full Page</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      const arrows = document.querySelectorAll('.carousel-arrow');
+      arrows.forEach(arrow => {
+        arrow.style.display = articles.length <= 1 ? 'none' : 'block';
+      });
+    }
+
+    function scrollCarousel(dir) {
+      document.getElementById('articles').scrollBy({ left: dir * 320, behavior: 'smooth' });
+    }
+
+    async function displayArticle(file, title = null) {
+      const res = await fetch(baseURL + file);
+      const raw = await res.text();
+      const frontmatter = parseFrontMatter(raw);
+      const content = raw.split('---').slice(2).join('---').trim();
+
+      const metaHTML = `
+        <h2 style="color:#FF2ECC">${frontmatter.title || file}</h2>
+        <p><em>${frontmatter.date || ''}</em></p>
+        <p>${frontmatter.description || ''}</p>
+        ${frontmatter.tags?.length ? `<div class="tags">${frontmatter.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ')}</div>` : ''}
+        <hr class="line" />
+      `;
+
+      document.getElementById('reader').innerHTML = metaHTML + marked.parse(content);
+
+      const mascot = document.getElementById('mascot');
+      const bubble = document.getElementById('bubble');
+      mascot.style.transform = 'scale(1.1)';
+      bubble.classList.add('show');
+      bubble.textContent = 'Meow!';
+      setTimeout(() => bubble.textContent = title || file, 1000);
+      setTimeout(() => {
+        mascot.style.transform = 'scale(1)';
+        bubble.classList.remove('show');
+      }, 3000);
+
+      document.getElementById('reader').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      await loadArticles();
+      const urlParams = new URLSearchParams(location.search);
+      const fileId = urlParams.get('id');
+      if (fileId) {
+        const article = allArticles.find(a => a.file === fileId);
+        if (article) displayArticle(fileId, article?.title || fileId);
+      }
+
+      document.getElementById('search').addEventListener('input', e => {
+        const value = e.target.value.toLowerCase();
+        const filtered = allArticles.filter(a =>
+          a.title.toLowerCase().includes(value) ||
+          a.description.toLowerCase().includes(value) ||
+          a.tags.some(t => t.toLowerCase().includes(value))
+        );
+        displayArticles(filtered);
+      });
+
+      document.getElementById('tagFilter').addEventListener('change', e => {
+        const val = e.target.value;
+        const filtered = val ? allArticles.filter(a => a.tags.includes(val)) : allArticles;
+        displayArticles(filtered);
+      });
+    });
+  </script>
 </body>
 </html>
