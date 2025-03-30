@@ -13,6 +13,8 @@
       font-family: 'Orbitron', sans-serif;
       background: linear-gradient(160deg, #0a0a0a, #1e1f3a);
       color: #efefef;
+      font-size: 17px;
+      line-height: 1.7;
     }
 
     h1 {
@@ -20,8 +22,65 @@
       color: #A0E8FF;
     }
 
-    pre {
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-bottom: 30px;
+      padding: 10px 20px;
+      font-family: 'Orbitron', sans-serif;
+      color: #00FFFF;
+      border: 1px solid #00FFFF;
+      border-radius: 6px;
       background: rgba(0, 255, 255, 0.05);
+      text-decoration: none;
+      transition: all 0.3s ease, transform 0.3s ease;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 46, 204, 0.15);
+      color: #FF2ECC;
+      transform: scale(1.05) rotate(-1deg);
+    }
+
+    #article {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid #00ffff30;
+      padding: 30px;
+      border-radius: 8px;
+      margin-top: 20px;
+      box-shadow: 0 0 15px #00ffff20;
+    }
+
+    .cyber-title {
+      font-size: 2em;
+      color: #FF2ECC;
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      display: inline-block;
+      margin: 3px;
+      padding: 4px 10px;
+      background: rgba(255, 46, 204, 0.2);
+      border: 1px solid #FF2ECC;
+      border-radius: 5px;
+      font-size: 0.8em;
+      color: #FF2ECC;
+    }
+
+    .line {
+      height: 2px;
+      background: linear-gradient(to right, #00FFFF, #A020F0);
+      border: none;
+      margin: 20px 0;
+    }
+
+    pre {
+      background: rgba(0, 255, 255, 0.07);
       border: 1px solid #00FFFF33;
       padding: 15px;
       border-radius: 8px;
@@ -45,65 +104,21 @@
       max-width: 100%;
       width: 500px;
       height: 750px;
+      object-fit: cover;
       border-radius: 8px;
       box-shadow: 0 0 12px #00ffff50;
     }
 
-    .line {
-      height: 2px;
-      background: linear-gradient(to right, #00FFFF, #A020F0);
-      border: none;
-      margin: 20px 0;
-    }
-
-    .back-button {
-      display: inline-block;
-      margin-bottom: 30px;
-      padding: 10px 20px;
-      font-family: 'Orbitron', sans-serif;
-      color: #00FFFF;
-      border: 1px solid #00FFFF;
-      border-radius: 6px;
-      background: rgba(0, 255, 255, 0.05);
-      text-decoration: none;
-      transition: all 0.3s ease, transform 0.3s ease;
-    }
-
-    .back-button:hover {
-      background: rgba(255, 46, 204, 0.15);
-      color: #FF2ECC;
-      transform: scale(1.05) rotate(-1deg);
-    }
-
-    .container {
-      max-width: 800px;
-      margin: auto;
-    }
-
-    #article {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid #00ffff30;
-      padding: 30px;
-      border-radius: 8px;
-      margin-top: 20px;
-      box-shadow: 0 0 15px #00ffff20;
-    }
-
-    .tag {
-      display: inline-block;
-      margin: 3px;
-      padding: 4px 10px;
-      background: rgba(255, 46, 204, 0.2);
-      border: 1px solid #FF2ECC;
-      border-radius: 5px;
-      font-size: 0.8em;
-      color: #FF2ECC;
-    }
-
-    .cyber-title {
-      font-size: 2em;
-      color: #FF2ECC;
-      margin-bottom: 10px;
+    .mascot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 100px;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 10px #00ffff);
+      z-index: 10;
+      transition: transform 0.3s ease;
+      cursor: pointer;
     }
 
     .bubble {
@@ -127,18 +142,6 @@
     .bubble.show {
       opacity: 1;
     }
-
-    .mascot {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 100px;
-      border-radius: 50%;
-      filter: drop-shadow(0 0 10px #00ffff);
-      z-index: 10;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
@@ -156,6 +159,11 @@
 
   <script>
     const baseURL = 'https://hacqueen-fr.github.io/posts/';
+    const knownArticles = [
+      'hacqueen-vs-eldorion.md',
+      'hacqueen-vs-gatekeeper.md',
+      'trial-by-fire.md'
+    ];
 
     function parseFrontMatter(mdText) {
       if (!mdText.startsWith('---')) return {};
@@ -194,15 +202,14 @@
       }
 
       file = sanitizeFilename(file);
+
+      if (!knownArticles.includes(file)) {
+        location.href = 'articles.html';
+        return;
+      }
+
       try {
         const res = await fetch(baseURL + file);
-
-        if (!res.ok) {
-          // If file doesn't exist, redirect
-          location.href = 'articles.html';
-          return;
-        }
-
         const text = await res.text();
         const frontmatter = parseFrontMatter(text);
         const content = text.split('---').slice(2).join('---').trim();
@@ -219,7 +226,7 @@
         document.getElementById('meta').innerHTML = metaHTML;
         document.getElementById('content').innerHTML = marked.parse(content);
 
-        // Bubble meow effect
+        // Mascot interaction
         const mascot = document.getElementById('mascot');
         const bubble = document.getElementById('bubble');
         mascot.style.transform = 'scale(1.1)';
@@ -235,15 +242,14 @@
       }
     }
 
-    function showThanks() {
+    document.getElementById('mascot').addEventListener('click', () => {
       const bubble = document.getElementById('bubble');
       bubble.classList.add('show');
       bubble.textContent = 'Thanks to Laluka for fixing this page 💖';
       setTimeout(() => bubble.textContent = '❤️', 2500);
       setTimeout(() => bubble.classList.remove('show'), 4500);
-    }
+    });
 
-    document.getElementById('mascot').addEventListener('click', showThanks);
     window.addEventListener('DOMContentLoaded', loadArticle);
   </script>
 </body>
