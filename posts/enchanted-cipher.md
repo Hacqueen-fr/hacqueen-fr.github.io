@@ -1,11 +1,9 @@
-
 ---
-title: "Enchanted Cipher"
+title: "Dragons Heart"
 date: 2025-03-30
-description: "A corrupted Codex, shifting ciphers, and a witch unraveling encrypted history."
-tags: ["CTF", "HTB", "Crypto", "Python", "Caesar Cipher"]
+description: "In the ruins of an age-old sanctum, the path to power lies in choosing wisely — for even magic has its limits."
+tags: ["CTF", "HTB", "Coding"]
 ---
-
 
 ![Enchanted Cipher](https://github.com/Hacqueen-fr/hacqueen-fr.github.io/raw/refs/heads/main/assets/enchanted-cipher.png)
 
