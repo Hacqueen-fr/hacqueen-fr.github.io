@@ -1,7 +1,7 @@
 ---
-title: "Dragons Heart"
+title: "Enchanted Cipher"
 date: 2025-03-30
-description: "In the ruins of an age-old sanctum, the path to power lies in choosing wisely — for even magic has its limits."
+description: "A corrupted Codex, shifting ciphers, and a witch unraveling encrypted history."
 tags: ["CTF", "HTB", "Coding"]
 ---
 
