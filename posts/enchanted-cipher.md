@@ -100,7 +100,7 @@ dpiiwwjc jeft zytk auhfvhvl dkekrlo
 And the scroll revealed the final ciphered truth:
 
 ```
-HTB{{3NCH4NT3D_C1PH3R_D3C0D3D_fb71c056e6e62a3757ee3e62ff1029c3}}
+HTB{3NCH4NT3D_C1PH3R_D3C0D3D_fb71c056e6e62a3757ee3e62ff1029c3}
 ```
 
 ---
@@ -110,7 +110,7 @@ HTB{{3NCH4NT3D_C1PH3R_D3C0D3D_fb71c056e6e62a3757ee3e62ff1029c3}}
 - Group letters into chunks of 5.
 - Each group uses its own Caesar shift.
 - Ignore non-letters during shifting, but reinsert them at the end.
-- Final flag: `HTB{{3NCH4NT3D_C1PH3R_D3C0D3D_fb71c056e6e62a3757ee3e62ff1029c3}}`
+- Final flag: `HTB{3NCH4NT3D_C1PH3R_D3C0D3D_fb71c056e6e62a3757ee3e62ff1029c3}`
 
 ---
 
